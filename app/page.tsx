@@ -1,4 +1,5 @@
 import { HeartFilledIcon } from "@/components/core/icons";
+import { HomeComponent } from "@/components/home";
 import { Button } from "@heroui/button";
 import { FiShare2 } from "react-icons/fi";
 
@@ -35,6 +36,7 @@ export default function Home() {
           </Button>
         </div>
       </div>
+      <HomeComponent />
       <Button color="primary">Ver todos los eventos</Button>
     </section>
   );
