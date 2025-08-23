@@ -1,4 +1,4 @@
-import { HeartFilledIcon } from "@/components/icons";
+import { HeartFilledIcon } from "@/components/core/icons";
 import { Button } from "@heroui/button";
 import { FiShare2 } from "react-icons/fi";
 

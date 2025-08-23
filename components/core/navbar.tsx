@@ -15,8 +15,8 @@ import clsx from "clsx";
 import NextLink from "next/link";
 import { FaUserCircle } from "react-icons/fa";
 
-import { GithubIcon, Logo, SearchIcon } from "@/components/icons";
-import { ThemeSwitch } from "@/components/theme-switch";
+import { GithubIcon, Logo, SearchIcon } from "@/components/core/icons";
+import { ThemeSwitch } from "@/components/core/theme-switch";
 import { siteConfig } from "@/config/site";
 
 export const Navbar = () => {
