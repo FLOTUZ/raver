@@ -13,6 +13,7 @@ import {
 import { link as linkStyles } from "@heroui/theme";
 import clsx from "clsx";
 import NextLink from "next/link";
+import { FaUserCircle } from "react-icons/fa";
 
 import { GithubIcon, Logo, SearchIcon } from "@/components/icons";
 import { ThemeSwitch } from "@/components/theme-switch";
@@ -21,7 +22,13 @@ import { siteConfig } from "@/config/site";
 export const Navbar = () => {
   const searchInput = (
     <Input
-      aria-label="Search"
+      aria-label="Buscar"
+      labelPlacement="outside"
+      placeholder="Buscar"
+      type="search"
+      startContent={
+        <SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0" />
+      }
       classNames={{
         inputWrapper: "bg-default-100",
         input: "text-sm",
@@ -31,12 +38,6 @@ export const Navbar = () => {
           K
         </Kbd>
       }
-      labelPlacement="outside"
-      placeholder="Search..."
-      startContent={
-        <SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0" />
-      }
-      type="search"
     />
   );
 
@@ -71,10 +72,13 @@ export const Navbar = () => {
         className="hidden sm:flex basis-1/5 sm:basis-full"
         justify="end"
       >
+        <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
         <NavbarItem className="hidden sm:flex gap-2">
           <ThemeSwitch />
         </NavbarItem>
-        <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
+        <NavbarItem className="hidden sm:flex gap-2">
+          <FaUserCircle size={20} className="text-default-500" />
+        </NavbarItem>
       </NavbarContent>
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
