@@ -4,6 +4,7 @@ export interface Event {
   description?: string;
   host: string;
   image: string;
+  banner?: string;
   init_date: string;
   end_date?: string;
   location: string;
