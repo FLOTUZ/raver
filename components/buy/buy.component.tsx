@@ -20,7 +20,6 @@ export const BuyComponent = ({ eventId }: { eventId: string }) => {
       name: "",
       email: "",
       whatsApp: "",
-      quantity: 1,
       eventId,
     },
     onSubmit: () => {},

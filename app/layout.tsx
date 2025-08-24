@@ -54,7 +54,7 @@ export default function RootLayout({
                 href="manicodes.com"
                 title="manicodes.com website"
               >
-                <span className="text-default-600">Maded with ❤️ by</span>
+                <span className="text-default-600">Made with ❤️ by</span>
                 <p className="text-primary">manicodes</p>
               </Link>
             </footer>
