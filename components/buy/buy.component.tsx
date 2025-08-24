@@ -145,10 +145,6 @@ export const BuyComponent = ({ eventId }: { eventId: string }) => {
             Reset
           </Button>
         </div>
-
-        <div className="text-small text-default-500 mt-4">
-          Submitted data: <pre>{JSON.stringify(form.values, null, 2)}</pre>
-        </div>
       </Form>
     </>
   );
