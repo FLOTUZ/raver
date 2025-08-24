@@ -16,7 +16,7 @@ export const EventCardComponent = (props: EventCardComponentProps) => {
     <div onClick={() => props.onClick(props.event)}>
       <Card
         isFooterBlurred
-        className="w-full min-w-[300px] h-[500px] col-span-12 sm:col-span-5 cursor-pointer"
+        className="w-full min-w-[350px] h-[550px] col-span-12 sm:col-span-5 cursor-pointer"
       >
         <CardHeader className="absolute z-10 top-1 flex-col items-start">
           <div className="flex items-center gap-1">

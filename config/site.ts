@@ -1,5 +1,7 @@
 export type SiteConfig = typeof siteConfig;
 
+import { FaUserCircle } from "react-icons/fa";
+
 export const siteConfig = {
   name: "Raver",
   description: "Ticketing app para eventos",
@@ -22,6 +24,7 @@ export const siteConfig = {
       href: "/dashboard",
     },
   ],
+
   navMenuItems: [
     {
       label: "Home",
@@ -44,7 +47,11 @@ export const siteConfig = {
       href: "/logout",
     },
   ],
-  links: {
-    github: "https://github.com/heroui-inc/heroui",
-  },
+  drawerItems: [
+    {
+      label: "Mi cuenta",
+      href: "/my-account",
+      icon: FaUserCircle,
+    },
+  ],
 };

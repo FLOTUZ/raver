@@ -1,3 +1,4 @@
+"use client";
 import { Input } from "@heroui/input";
 import { Kbd } from "@heroui/kbd";
 import { Link } from "@heroui/link";
@@ -15,9 +16,9 @@ import clsx from "clsx";
 import NextLink from "next/link";
 import { FaUserCircle } from "react-icons/fa";
 
-import { GithubIcon, Logo, SearchIcon } from "@/components/core/icons";
-import { ThemeSwitch } from "@/components/core/theme-switch";
+import { Logo, SearchIcon } from "@/components/core/icons";
 import { siteConfig } from "@/config/site";
+import { ProfileDrawerComponent } from "./profile-drawer.component";
 
 export const Navbar = () => {
   const searchInput = (
@@ -74,18 +75,13 @@ export const Navbar = () => {
       >
         <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
         <NavbarItem className="hidden sm:flex gap-2">
-          <ThemeSwitch />
-        </NavbarItem>
-        <NavbarItem className="hidden sm:flex gap-2">
-          <FaUserCircle size={20} className="text-default-500" />
+          <ProfileDrawerComponent drawerItems={siteConfig.drawerItems}>
+            <FaUserCircle size={20} className="text-default-500" />
+          </ProfileDrawerComponent>
         </NavbarItem>
       </NavbarContent>
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
-        <Link isExternal aria-label="Github" href={siteConfig.links.github}>
-          <GithubIcon className="text-default-500" />
-        </Link>
-        <ThemeSwitch />
         <NavbarMenuToggle />
       </NavbarContent>
 

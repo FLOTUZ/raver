@@ -6,7 +6,8 @@ export const events: Event[] = [
     name: "Inauguración de RAVR",
     description: "Inauguración de RAVR",
     host: "mani.codes",
-    image: "https://heroui.com/images/card-example-6.jpeg",
+    image:
+      "https://i.pinimg.com/736x/70/18/12/701812553630321ca103c55afc93c172.jpg",
     init_date: "2023-01-01T00:00:00.000Z",
     end_date: "2023-01-02",
     location: "Calle 123, Ciudad, País",
