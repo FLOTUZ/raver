@@ -12,17 +12,14 @@ export const siteConfig = {
       label: "Blog",
       href: "/blog",
     },
+
     {
-      label: "Dashboard",
-      href: "/dashboard",
-    },
-    {
-      label: "Sobre nosotros",
+      label: "Sobre raver",
       href: "/about",
     },
     {
-      label: "Logout",
-      href: "/logout",
+      label: "Dashboard",
+      href: "/dashboard",
     },
   ],
   navMenuItems: [
