@@ -7,9 +7,10 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  return Response.json({
-    status: 201,
-    method: request.method,
-    message: "Hello, Next.js!",
-  });
+  return Response.json(
+    {
+      method: request.method,
+    },
+    { status: 201, statusText: "success" }
+  );
 }
