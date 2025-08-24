@@ -10,6 +10,7 @@ import ReactMarkdown from "react-markdown";
 import remarkBreaks from "remark-breaks";
 import remarkGfm from "remark-gfm";
 
+import Link from "next/link";
 import { ImTicket } from "react-icons/im";
 
 export const ShowEventView = ({ eventId }: { eventId: string }) => {
@@ -74,17 +75,19 @@ export const ShowEventView = ({ eventId }: { eventId: string }) => {
               {event.description}
             </ReactMarkdown>
           </div>
-          <Button
-            size="lg"
-            color="secondary"
-            variant="shadow"
-            className="px-8 w-full"
-          >
-            <span className="inline-flex items-center gap-2">
-              Comprar pase
-              <ImTicket className="w-5 h-5" />
-            </span>
-          </Button>
+          <Link href={`/events/${event.id}/buy`}>
+            <Button
+              size="lg"
+              color="secondary"
+              variant="shadow"
+              className="px-8 w-full"
+            >
+              <span className="inline-flex items-center gap-2">
+                Comprar pase
+                <ImTicket className="w-5 h-5" />
+              </span>
+            </Button>
+          </Link>
         </div>
       </div>
     </>
