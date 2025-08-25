@@ -32,18 +32,29 @@ export const BuyComponent = ({ eventId }: { eventId: string }) => {
 
     onSubmit: async () => {
       setSendingTicket(true);
-      const response = await axios.post("/api/buy", form.values);
-      setSendingTicket(false);
-      if (response.status === 201) {
-        form.resetForm();
-        setShowForm(false);
+
+      try {
+        const response = await axios.post("/api/buy", form.values);
+
+        if (response.status === 201) {
+          form.resetForm();
+          setShowForm(false);
+          addToast({
+            title: "Entrada Enviada",
+            description: "Tu entrada ha sido enviada con exito",
+            variant: "solid",
+            color: "success",
+          });
+        }
+      } catch (error) {
         addToast({
-          title: "Entrada Enviada",
-          description: "Tu entrada ha sido enviada con exito",
+          title: "Error",
+          description: "Hubo un error al enviar la entrada",
           variant: "solid",
-          color: "success",
+          color: "danger",
         });
       }
+      setSendingTicket(false);
     },
   });
 
