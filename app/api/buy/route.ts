@@ -6,8 +6,8 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { name, email, whatsApp } = body;
 
-    const qrData = `https://wa.me/${whatsApp}`;
-    const qrImageDataUrl = await QRCode.toDataURL(qrData);
+    const ticketId = Math.floor(Math.random() * 100000).toString();
+    const qrImageDataUrl = await QRCode.toDataURL(ticketId);
 
     const pdfBuffer = await pdfGenerator("payment", {
       name,
@@ -18,7 +18,13 @@ export async function POST(request: Request) {
       to: email,
       subject: "RAVR - Instrucciones de pago",
       template: "payment-instructions",
-      context: { name, ticketId: whatsApp, amount: 100, qrImageDataUrl },
+      context: {
+        name,
+        ticketId: ticketId,
+        amount: 100,
+        qrImageDataUrl,
+        whatsApp: `${whatsApp}?text=Hola%20RAVR%20-%20Instrucciones%20de%20pago%20-%20${ticketId}`,
+      },
       attachments: [
         {
           filename: "payment-instructions.pdf",
