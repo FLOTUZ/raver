@@ -44,6 +44,7 @@ export async function pdfGenerator({
     width,
     height,
     printBackground: true,
+    preferCSSPageSize: true,
   });
   await browser.close();
 
