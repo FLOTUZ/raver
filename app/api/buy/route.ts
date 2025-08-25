@@ -1,47 +1,30 @@
 import { sendMail } from "@/lib";
-import { Buffer } from "buffer";
+import fs from "fs";
+import Handlebars from "handlebars";
 import { join } from "path";
-import PDFDocument from "pdfkit";
+import puppeteer from "puppeteer";
 import QRCode from "qrcode";
 
-// Función para generar PDF con QR como Buffer
-export async function generatePdf(
-  qrDataUrl: string,
-  name: string
+// Genera PDF a partir de un template Handlebars y devuelve un Buffer
+async function generatePdfFromTemplate(
+  name: string,
+  qrImageDataUrl: string
 ): Promise<Buffer> {
-  return new Promise((resolve, reject) => {
-    const fontPath = join(process.cwd(), "lib/fonts/Helvetica.ttf");
-    const doc = new PDFDocument({ font: fontPath });
-    const chunks: Uint8Array[] = [];
+  const templatePath = join(process.cwd(), "lib/mail/templates/welcome.hbs");
+  const templateContent = fs.readFileSync(templatePath, "utf-8");
+  const template = Handlebars.compile(templateContent);
+  const html = template({ name, qrImageDataUrl });
 
-    doc.on("data", (chunk: Buffer) => {
-      chunks.push(Uint8Array.from(chunk)); // convertimos a Uint8Array
-    });
-
-    doc.on("end", () => {
-      // concatenamos todos los Uint8Array en un solo Uint8Array
-      const totalLength = chunks.reduce((sum, arr) => sum + arr.length, 0);
-      const merged = new Uint8Array(totalLength);
-      let offset = 0;
-      for (const arr of chunks) {
-        merged.set(arr, offset);
-        offset += arr.length;
-      }
-      // convertimos a Buffer antes de devolver
-      resolve(Buffer.from(merged));
-    });
-
-    doc.on("error", (err) => reject(err));
-
-    doc.text(`Hola ${name}, este es tu QR:`);
-    doc.image(Buffer.from(qrDataUrl.split(",")[1], "base64"), {
-      fit: [200, 200],
-      align: "center",
-      valign: "center",
-    });
-
-    doc.end();
+  const browser = await puppeteer.launch({
+    args: ["--no-sandbox", "--disable-setuid-sandbox"], // útil en servidores
   });
+  const page = await browser.newPage();
+  await page.setContent(html, { waitUntil: "networkidle0" });
+
+  const pdfBuffer = await page.pdf({ format: "A4" });
+  await browser.close();
+
+  return Buffer.from(pdfBuffer); // ✅ convertimos a Buffer de Node.js
 }
 
 export async function POST(request: Request) {
@@ -54,18 +37,7 @@ export async function POST(request: Request) {
     const qrImageDataUrl = await QRCode.toDataURL(qrData);
 
     // Generar PDF con QR
-    let pdfBuffer = Buffer.from("");
-    try {
-      pdfBuffer = await generatePdf(qrImageDataUrl, name); // ✅ ahora es Buffer
-    } catch (error) {
-      return new Response(
-        JSON.stringify({
-          method: request.method,
-          error,
-        }),
-        { status: 500 }
-      );
-    }
+    const pdfBuffer = await generatePdfFromTemplate(name, qrImageDataUrl);
 
     // Enviar correo con QR incrustado y PDF adjunto
     const { info, previewUrl } = await sendMail({
