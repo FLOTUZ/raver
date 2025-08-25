@@ -11,7 +11,7 @@ export async function POST(request: Request) {
 
     const pdfBuffer = await pdfGenerator({
       templateName: "payment",
-      width: "80mm",
+      width: "120mm",
       context: {
         name,
         ticketId: ticketId,
