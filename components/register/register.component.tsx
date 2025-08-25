@@ -14,7 +14,7 @@ import axios from "axios";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 
-export const BuyComponent = ({ eventId }: { eventId: string }) => {
+export const RegisterComponent = ({ eventId }: { eventId: string }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [event, setEvent] = useState<Event | null>(null);
 
@@ -39,7 +39,7 @@ export const BuyComponent = ({ eventId }: { eventId: string }) => {
       };
 
       try {
-        const response = await axios.post("/api/buy", payload);
+        const response = await axios.post("/api/register", payload);
 
         if (response.status === 201) {
           form.resetForm();

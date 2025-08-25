@@ -4,10 +4,12 @@ import QRCode from "qrcode";
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, email, whatsApp } = body;
+    const { name, email, telephone } = body;
 
     const ticketId = Math.floor(Math.random() * 100000).toString();
     const qrImageDataUrl = await QRCode.toDataURL(ticketId);
+
+    const whatsApp = "521123456789";
 
     const pdfBuffer = await pdfGenerator({
       templateName: "payment",
