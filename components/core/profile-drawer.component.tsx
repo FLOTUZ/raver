@@ -30,7 +30,7 @@ export const ProfileDrawerComponent = (props: ProfileDrawerComponentProps) => {
             <>
               <DrawerHeader className="flex flex-col gap-1 flex-direction-row items-center">
                 <Logo />
-                <h4 className="font-bold">Raver</h4>
+                <h4 className="font-bold">RAVR</h4>
               </DrawerHeader>
               <DrawerBody>
                 {props.drawerItems.map((item, index) => (

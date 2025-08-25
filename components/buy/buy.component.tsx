@@ -26,15 +26,20 @@ export const BuyComponent = ({ eventId }: { eventId: string }) => {
     initialValues: {
       name: "",
       email: "",
+      country_code: "+52",
       whatsApp: "",
       eventId,
     },
 
-    onSubmit: async () => {
+    onSubmit: async (values) => {
       setSendingTicket(true);
+      const payload = {
+        ...values,
+        telephone: values.country_code.slice(1) + "1" + values.whatsApp,
+      };
 
       try {
-        const response = await axios.post("/api/buy", form.values);
+        const response = await axios.post("/api/buy", payload);
 
         if (response.status === 201) {
           form.resetForm();
@@ -90,21 +95,22 @@ export const BuyComponent = ({ eventId }: { eventId: string }) => {
             ? event.name.slice(0, 20) + "..."
             : event.name}
         </BreadcrumbItem>
-        <BreadcrumbItem>Comprar</BreadcrumbItem>
+        <BreadcrumbItem>Registro</BreadcrumbItem>
       </Breadcrumbs>
       {showForm ? (
         <>
-          <h1 className="text-2xl font-bold mt-4">Comprar entrada</h1>
+          <h1 className="text-2xl font-bold mt-4">Registro de Entradas</h1>
           <p className="text-lg text-default-400">
-            Completa el formulario para enviar tus entradas
+            Completa el formulario para enviarte las instrucciones de pago.
           </p>
-          <Form
-            className="w-full  space-y-4 mt-16"
-            validationErrors={form.errors}
-            onReset={() => form.resetForm()}
-            onSubmit={form.handleSubmit}
-          >
-            <div className="flex flex-col gap-4 max-w-md w-full">
+
+          <div className="mt-4 flex items-center justify-center">
+            <Form
+              className="flex flex-col space-y-4 mt-16"
+              validationErrors={form.errors}
+              onReset={() => form.resetForm()}
+              onSubmit={form.handleSubmit}
+            >
               <Input
                 name="name"
                 label="Nombre"
@@ -145,63 +151,89 @@ export const BuyComponent = ({ eventId }: { eventId: string }) => {
                 }}
               />
 
-              <Input
-                name="whatsApp"
-                label="WhatsApp"
-                type="tel"
-                minLength={10}
-                maxLength={13}
-                isRequired
-                labelPlacement="outside"
-                placeholder="Ingresa tu número de WhatsApp"
-                value={form.values.whatsApp}
-                onChange={form.handleChange}
-                onBlur={form.handleBlur}
-                errorMessage={({ validationDetails }) => {
-                  if (validationDetails.valueMissing) {
-                    return "Por favor ingresa tu número de WhatsApp";
-                  }
+              <div className="flex gap-2 flex-row mt-8">
+                <Input
+                  className="w-25"
+                  name="country_code"
+                  label="Código de País"
+                  isRequired
+                  labelPlacement="outside"
+                  placeholder="Ingresa tu código de país"
+                  value={form.values.country_code}
+                  onChange={(e) => {
+                    if (!e.target.value.startsWith("+")) {
+                      form.setFieldValue("country_code", `+${e.target.value}`);
+                      return;
+                    }
+                    form.setFieldValue("country_code", `${e.target.value}`);
+                  }}
+                  onBlur={form.handleBlur}
+                  errorMessage={({ validationDetails }) => {
+                    if (validationDetails.valueMissing) {
+                      return "Por favor ingresa tu código de país";
+                    }
 
-                  if (validationDetails.typeMismatch) {
-                    return "Por favor ingresa un número de WhatsApp válido";
-                  }
+                    return null;
+                  }}
+                />
 
-                  if (form.values.whatsApp.length < 10) {
-                    return "El número de WhatsApp debe tener al menos 10 caracteres";
-                  }
+                <Input
+                  name="whatsApp"
+                  label="WhatsApp a 10 dígitos"
+                  type="tel"
+                  minLength={10}
+                  maxLength={10}
+                  isRequired
+                  labelPlacement="outside"
+                  placeholder="Ingresa tu número de WhatsApp a 10 dígitos"
+                  value={form.values.whatsApp}
+                  onChange={form.handleChange}
+                  onBlur={form.handleBlur}
+                  errorMessage={({ validationDetails }) => {
+                    if (validationDetails.valueMissing) {
+                      return "Por favor ingresa tu número de WhatsApp";
+                    }
 
-                  return validationDetails.patternMismatch;
-                }}
-              />
-            </div>
-            <div className="flex gap-4">
+                    if (validationDetails.typeMismatch) {
+                      return "Por favor ingresa un número de WhatsApp válido";
+                    }
+
+                    if (form.values.whatsApp.length < 10) {
+                      return "El número de WhatsApp debe tener al menos 10 caracteres";
+                    }
+
+                    return validationDetails.patternMismatch;
+                  }}
+                />
+              </div>
+              <p>
+                <strong>Nota:</strong> Escribe correctamente tus datos de lo
+                contrario no podrás realizar el pago ni recibir tu entrada
+                correctamente.
+              </p>
               <Button
                 className="w-full"
                 color="primary"
                 type="submit"
                 isLoading={sendingTicket}
               >
-                Submit
+                Enviar
               </Button>
-              <Button type="reset" variant="bordered">
-                Reset
-              </Button>
-            </div>
-          </Form>
+            </Form>
+          </div>
         </>
       ) : (
         <>
           <h1 className="text-2xl font-bold mt-4">Gracias por registrarte</h1>
           <p className="text-lg text-default-400">
-            Tus entradas han sido enviadas con exito a tu email y whatsapp para
-            continuar con el proceso de pago
+            Las instrucciones de pago han sido enviadas a tu correo electrónico
           </p>
 
           <div className="flex flex-col w-full items-center">
             <Image
               src={"/paperplane.png"}
               alt={event.name}
-              className="mx-auto self-center w-full h-[400px] object-cover mt-4"
+              className="mx-auto self-center w-full h-[400px] object-contain mt-4"
             />
           </div>
 
@@ -210,7 +242,7 @@ export const BuyComponent = ({ eventId }: { eventId: string }) => {
             color="primary"
             onPress={() => setShowForm(true)}
           >
-            Comprar otra entrada
+            Registrar otra entrada
           </Button>
         </>
       )}

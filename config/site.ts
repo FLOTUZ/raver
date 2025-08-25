@@ -3,7 +3,7 @@ export type SiteConfig = typeof siteConfig;
 import { FaUserCircle } from "react-icons/fa";
 
 export const siteConfig = {
-  name: "Raver",
+  name: "RAVR",
   description: "Ticketing app para eventos",
   navItems: [
     {
@@ -16,7 +16,7 @@ export const siteConfig = {
     },
 
     {
-      label: "Sobre raver",
+      label: "Sobre RAVR",
       href: "/about",
     },
     {
