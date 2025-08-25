@@ -11,7 +11,10 @@ export async function POST(request: Request) {
 
     const pdfBuffer = await pdfGenerator("payment", {
       name,
+      ticketId: ticketId,
+      amount: 100,
       qrImageDataUrl,
+      whatsApp: `${whatsApp}?text=Hola%20RAVR%20-%20Instrucciones%20de%20pago%20-%20${ticketId}`,
     });
 
     const { info, previewUrl } = await sendMail({
