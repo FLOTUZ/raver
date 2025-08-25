@@ -1,12 +1,10 @@
-import nodemailer from "nodemailer";
+import nodemailer, { SendMailOptions } from "nodemailer";
 import hbs from "nodemailer-express-handlebars";
 import { join } from "path";
 
-interface MailOptions {
-  to: string;
-  subject: string;
-  template: string;
-  context: Record<string, any>;
+interface ExtendedMailOptions extends SendMailOptions {
+  template?: string; // nombre del template .hbs
+  context?: Record<string, any>; // contexto para Handlebars
 }
 
 export async function sendMail({
@@ -14,11 +12,11 @@ export async function sendMail({
   subject,
   template,
   context,
-}: MailOptions) {
+  attachments,
+}: ExtendedMailOptions) {
   let transporter;
 
   if (process.env.NODE_ENV === "production") {
-    // SMTP real para producción
     transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
       port: Number(process.env.SMTP_PORT),
@@ -29,7 +27,6 @@ export async function sendMail({
       },
     });
   } else {
-    // Ethereal para pruebas
     const testAccount = await nodemailer.createTestAccount();
     transporter = nodemailer.createTransport({
       host: testAccount.smtp.host,
@@ -56,17 +53,17 @@ export async function sendMail({
     })
   );
 
-  const mailOptions = {
+  const mailOptions: ExtendedMailOptions = {
     from: `"${process.env.EMAIL_FROM_NAME}" <${process.env.EMAIL_FROM_ADDRESS}>`,
     to,
     subject,
     template,
     context,
+    attachments,
   };
 
   const info = await transporter.sendMail(mailOptions);
 
-  // URL de previsualización solo para Ethereal
   const previewUrl =
     process.env.NODE_ENV !== "production"
       ? nodemailer.getTestMessageUrl(info)
