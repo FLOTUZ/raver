@@ -6,6 +6,7 @@ import {
   Breadcrumbs,
   Button,
   Form,
+  Image,
   Input,
   Progress,
 } from "@heroui/react";
@@ -18,7 +19,7 @@ export const BuyComponent = ({ eventId }: { eventId: string }) => {
   const [event, setEvent] = useState<Event | null>(null);
 
   const [sendingTicket, setSendingTicket] = useState<boolean>(false);
-  const [showForm, setShowForm] = useState<boolean>(false);
+  const [showForm, setShowForm] = useState<boolean>(true);
 
   const form = useFormik({
     enableReinitialize: true,
@@ -181,8 +182,17 @@ export const BuyComponent = ({ eventId }: { eventId: string }) => {
         <>
           <h1 className="text-2xl font-bold mt-4">Gracias por registrarte</h1>
           <p className="text-lg text-default-400">
-            Tus entradas han sido enviadas con exito a tu email y whatsapp
+            Tus entradas han sido enviadas con exito a tu email y whatsapp para
+            continuar con el proceso de pago
           </p>
+
+          <div className="flex flex-col w-full items-center">
+            <Image
+              src={"/paperplane.png"}
+              alt={event.name}
+              className="mx-auto self-center w-full h-[400px] object-cover mt-4"
+            />
+          </div>
 
           <Button
             className="w-full mt-4"
