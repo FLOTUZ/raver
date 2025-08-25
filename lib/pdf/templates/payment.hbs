@@ -3,12 +3,9 @@
     size: 120mm auto;
     margin: 0;
   }
-  body {
+  * {
     font-family: Arial, sans-serif;
     font-size: 12px;
-  }
-  h1 {
-    font-family: "Times New Roman", serif;
   }
 </style>
 
@@ -19,7 +16,7 @@
     <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
     <h2>{{name}}, para completar tu pago en efectivo, sigue las siguientes instrucciones:</h2>
     <ol>
-      <li>Dirigete con cualquier representante de RAVR.</li>
+      <li>Dirigete con cualquiera de nuestros representante de RAVR.</li>
       <li>Indica que deseas realizar un pago de tu entrada.</li>
       <li>Realiza el pago con el monto exacto <strong>en efectivo</strong> de {{amount}} MXN.</strong></li>
       <li>Muestra el QR de tu pase al representante de RAVR para ser escaneado.</li>
@@ -29,7 +26,7 @@
     </div>
     <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
       <img src="{{qrImageDataUrl}}" alt="QR Code" style="display: block; margin: 0 auto;" />
-      <p style="font-size: 20px">Ref:<strong>{{ticketId}}</strong></p>
+      <p style="font-size: 20px">Ref:<strong style="font-size: 20px">{{ticketId}}</strong></p>
     <br/>
     <p>¡Gracias por ser parte de RAVR!</p>
     </div>

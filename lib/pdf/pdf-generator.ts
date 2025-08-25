@@ -39,10 +39,16 @@ export async function pdfGenerator({
   const page = await browser.newPage();
   await page.setContent(html, { waitUntil: "networkidle0" });
 
+  const contentHeight =
+    height ||
+    (await page.evaluate(() => {
+      return document.documentElement.scrollHeight;
+    }));
+
   const pdfBuffer = await page.pdf({
     format,
     width,
-    height,
+    height: contentHeight,
     printBackground: true,
     preferCSSPageSize: true,
   });
