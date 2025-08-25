@@ -10,8 +10,8 @@ export async function generatePdf(
   name: string
 ): Promise<Buffer> {
   return new Promise((resolve, reject) => {
-    const doc = new PDFDocument();
-
+    const fontPath = join(process.cwd(), "lib/fonts/Helvetica.ttf");
+    const doc = new PDFDocument({ font: fontPath });
     const chunks: Uint8Array[] = [];
 
     doc.on("data", (chunk: Buffer) => {
@@ -32,9 +32,6 @@ export async function generatePdf(
     });
 
     doc.on("error", (err) => reject(err));
-
-    const fontPath = join(process.cwd(), "lib/fonts/Helvetica.ttf");
-    doc.font(fontPath);
 
     doc.text(`Hola ${name}, este es tu QR:`);
     doc.image(Buffer.from(qrDataUrl.split(",")[1], "base64"), {
