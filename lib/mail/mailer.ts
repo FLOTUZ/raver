@@ -48,10 +48,10 @@ export async function sendMail({
     hbs({
       viewEngine: {
         extname: ".hbs",
-        partialsDir: join(process.cwd(), "lib/templates"),
+        partialsDir: join(process.cwd(), "lib/mail/templates"),
         defaultLayout: "",
       },
-      viewPath: join(process.cwd(), "lib/templates"),
+      viewPath: join(process.cwd(), "lib/mail/templates"),
       extName: ".hbs",
     })
   );
