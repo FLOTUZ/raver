@@ -35,7 +35,7 @@ export const BottomNavBarComponent = () => {
         {/* Enlaces de la derecha */}
         <div className="flex flex-1 justify-around">
           <Link
-            href="/admin/registered"
+            href="/registered"
             replace
             className={`flex flex-col items-center text-center py-2 ${pathname === "/admin/settings" ? "text-blue-600 font-bold" : "text-gray-500"}`}
           >
