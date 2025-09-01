@@ -1,10 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   webpack: (config) => {
-    config.module.rules.push({
-      test: /\.hbs$/,
-      loader: "handlebars-loader",
-    });
+    // Ignorar warnings específicos de handlebars
+    config.ignoreWarnings = [
+      { module: /handlebars/, message: /require\.extensions/ },
+    ];
     return config;
   },
 };
