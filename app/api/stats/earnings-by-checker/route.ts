@@ -4,12 +4,10 @@ import { NextResponse } from "next/server";
 
 async function earningsByCheckers() {
   const checkers = await prisma.checker.findMany({
-    select: {
-      id: true,
+    include: {
       user: true,
     },
   });
-  console.log(checkers);
   return NextResponse.json(checkers);
 }
 
