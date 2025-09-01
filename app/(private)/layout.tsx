@@ -1,4 +1,7 @@
-import { AutorizationGuardComponent } from "@/components/admin";
+import {
+  AutorizationGuardComponent,
+  BottomNavBarComponent,
+} from "@/components/admin";
 import { AuthAdminProvider } from "@/providers/auth-admin.provider";
 
 interface PrivateLayoutProps {
@@ -7,7 +10,10 @@ interface PrivateLayoutProps {
 const PrivateLayout = ({ children }: PrivateLayoutProps) => {
   return (
     <AuthAdminProvider>
-      <AutorizationGuardComponent>{children}</AutorizationGuardComponent>
+      <AutorizationGuardComponent>
+        <>{children}</>
+        <BottomNavBarComponent />
+      </AutorizationGuardComponent>
     </AuthAdminProvider>
   );
 };
