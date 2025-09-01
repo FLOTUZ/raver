@@ -1,5 +1,6 @@
-import { Checker, Host } from "@/interfaces";
 import { $Enums } from "@prisma/client";
+
+import { Checker, Host } from "@/interfaces";
 export interface User {
   id: string;
   email: string;

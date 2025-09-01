@@ -1,5 +1,7 @@
 "use client";
 
+import { Progress } from "@heroui/react";
+
 import {
   CheckersEarningsList,
   StatCard,
@@ -7,7 +9,6 @@ import {
 } from "@/components/admin";
 import { useQuery } from "@/hooks/useQuery";
 import { Checker } from "@/interfaces";
-import { Progress } from "@heroui/react";
 
 const AdminPage = () => {
   const { data: sellledTickets, loading: loadingSelledTickets } = useQuery<
@@ -31,6 +32,7 @@ const AdminPage = () => {
       />
     );
   }
+
   return (
     <div className="flex flex-col gap-4 m-4">
       <StatCard saleStats={sellledTickets} />

@@ -1,17 +1,15 @@
 "use client";
 import { BreadcrumbItem, Breadcrumbs } from "@heroui/breadcrumbs";
 import { Button, Image, Progress } from "@heroui/react";
-
-import { events } from "@/data/data";
-import { Event } from "@/interfaces";
 import { useEffect, useState } from "react";
-
 import ReactMarkdown from "react-markdown";
 import remarkBreaks from "remark-breaks";
 import remarkGfm from "remark-gfm";
-
 import Link from "next/link";
 import { ImTicket } from "react-icons/im";
+
+import { Event } from "@/interfaces";
+import { events } from "@/data/data";
 
 export const ShowEventView = ({ eventId }: { eventId: string }) => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -24,6 +22,7 @@ export const ShowEventView = ({ eventId }: { eventId: string }) => {
       setEvent(() => events.find((event) => event.id === eventId) || null);
       setLoading(false);
     };
+
     fetchEvent();
   }, []);
 
@@ -56,10 +55,10 @@ export const ShowEventView = ({ eventId }: { eventId: string }) => {
       <div className="w-full flex justify-center">
         {event?.banner && (
           <Image
-            src={event.banner}
             alt="Event"
-            height={400}
             className="object-cover mt-4 w-full max-w-5xl rounded-xl"
+            height={400}
+            src={event.banner}
           />
         )}
       </div>
@@ -77,10 +76,10 @@ export const ShowEventView = ({ eventId }: { eventId: string }) => {
           </div>
           <Link href={`/events/${event.id}/buy`}>
             <Button
-              size="lg"
-              color="secondary"
-              variant="shadow"
               className="px-8 w-full"
+              color="secondary"
+              size="lg"
+              variant="shadow"
             >
               <span className="inline-flex items-center gap-2">
                 Comprar pase

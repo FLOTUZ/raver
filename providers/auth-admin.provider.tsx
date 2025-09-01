@@ -43,6 +43,7 @@ export const AuthAdminProvider = ({ children }: { children: ReactNode }) => {
 
       if (response.status === 200) {
         const data = response.data as { user: User; token: string };
+
         setAdmin(response.data.user);
         localStorage.setItem("admin", JSON.stringify(data.user));
         localStorage.setItem("token", JSON.stringify(data.token));
@@ -66,6 +67,7 @@ export const AuthAdminProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const storedAdmin = localStorage.getItem("admin");
+
     if (storedAdmin) {
       setAdmin(JSON.parse(storedAdmin));
     }
@@ -85,8 +87,10 @@ export const AuthAdminProvider = ({ children }: { children: ReactNode }) => {
 
 export const useAdminAuth = (): AuthAdminContextType => {
   const context = useContext(AuthContext);
+
   if (!context) {
     throw new Error("useAuth must be used within an AuthProvider");
   }
+
   return context;
 };

@@ -1,7 +1,8 @@
 "use client";
 
-import { RegisterComponent } from "@/components/register/register.component";
 import { useParams } from "next/navigation";
+
+import { RegisterComponent } from "@/components/register/register.component";
 
 const ButPage = () => {
   const params = useParams();

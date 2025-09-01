@@ -1,6 +1,7 @@
 "use client";
-import { Checker } from "@/interfaces";
 import { FaMoneyBillWave, FaUserCircle } from "react-icons/fa";
+
+import { Checker } from "@/interfaces";
 
 export const CheckersEarningsList = ({ checkers }: { checkers: Checker[] }) => {
   return (

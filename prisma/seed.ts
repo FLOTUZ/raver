@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { PrismaClient, Role } from "@prisma/client";
 import bcrypt from "bcrypt";
 
@@ -33,7 +34,7 @@ async function main() {
     },
   });
 
-  const checkerEarning = await prisma.checker.create({
+  await prisma.checker.create({
     data: {
       amount: 0,
       user_id: checker.id,

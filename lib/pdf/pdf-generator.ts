@@ -1,6 +1,7 @@
 import fs from "fs";
-import Handlebars from "handlebars";
 import { join } from "path";
+
+import Handlebars from "handlebars";
 import puppeteer, { PaperFormat } from "puppeteer";
 
 /**
@@ -27,7 +28,7 @@ export async function pdfGenerator({
 }): Promise<Buffer> {
   const templatePath = join(
     process.cwd(),
-    `lib/pdf/templates/${templateName}.hbs`
+    `lib/pdf/templates/${templateName}.hbs`,
   );
   const templateContent = fs.readFileSync(templatePath, "utf-8");
   const template = Handlebars.compile(templateContent);
@@ -37,6 +38,7 @@ export async function pdfGenerator({
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
   });
   const page = await browser.newPage();
+
   await page.setContent(html, { waitUntil: "networkidle0" });
 
   const contentHeight =
@@ -52,6 +54,7 @@ export async function pdfGenerator({
     printBackground: true,
     preferCSSPageSize: true,
   });
+
   await browser.close();
 
   return Buffer.from(pdfBuffer);

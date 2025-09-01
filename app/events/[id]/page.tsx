@@ -1,6 +1,7 @@
 "use client";
-import { ShowEventView } from "@/components/events";
 import { useParams } from "next/navigation";
+
+import { ShowEventView } from "@/components/events";
 
 const EventPage = () => {
   const params = useParams();

@@ -14,15 +14,15 @@ export const BottomNavBarComponent = () => {
         {/* Enlaces de la izquierda */}
         <div className="flex flex-1 justify-around">
           <Link
-            href="/admin"
             replace
             className={`flex flex-col items-center text-center py-2 ${pathname === "/admin" ? "text-blue-600 font-bold" : "text-gray-500"}`}
+            href="/admin"
           >
             {/* Aquí puedes añadir un icono para "Inicio" */}
             <span>Dashboard</span>
           </Link>
         </div>
-        <Link href="/scanner" replace>
+        <Link replace href="/scanner">
           <button className="relative flex flex-col items-center justify-center -mt-16 mx-4 w-20 h-20 bg-blue-600 text-white rounded-full shadow-lg ring-4 ring-black transform transition-transform duration-200 hover:scale-110 active:scale-105">
             {/* Contenido del botón */}
             <span className="text-xl">
@@ -35,9 +35,9 @@ export const BottomNavBarComponent = () => {
         {/* Enlaces de la derecha */}
         <div className="flex flex-1 justify-around">
           <Link
-            href="/registered"
             replace
             className={`flex flex-col items-center text-center py-2 ${pathname === "/admin/settings" ? "text-blue-600 font-bold" : "text-gray-500"}`}
+            href="/registered"
           >
             {/* Aquí puedes añadir un icono para "Configuración" */}
             <span>Pre-registro</span>

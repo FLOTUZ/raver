@@ -1,6 +1,7 @@
+import { join } from "path";
+
 import nodemailer, { SendMailOptions } from "nodemailer";
 import hbs from "nodemailer-express-handlebars";
-import { join } from "path";
 
 interface ExtendedMailOptions extends SendMailOptions {
   template?: string; // nombre del template .hbs
@@ -28,6 +29,7 @@ export async function sendMail({
     });
   } else {
     const testAccount = await nodemailer.createTestAccount();
+
     transporter = nodemailer.createTransport({
       host: testAccount.smtp.host,
       port: testAccount.smtp.port,
@@ -50,7 +52,7 @@ export async function sendMail({
       },
       viewPath: join(process.cwd(), "lib/mail/templates"),
       extName: ".hbs",
-    })
+    }),
   );
 
   const mailOptions: ExtendedMailOptions = {

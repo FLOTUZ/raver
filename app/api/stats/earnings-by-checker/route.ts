@@ -1,6 +1,7 @@
+import { NextResponse } from "next/server";
+
 import { protectedRoute } from "@/lib";
 import { prisma } from "@/prisma";
-import { NextResponse } from "next/server";
 
 async function earningsByCheckers() {
   const checkers = await prisma.checker.findMany({
@@ -8,6 +9,7 @@ async function earningsByCheckers() {
       user: true,
     },
   });
+
   return NextResponse.json(checkers);
 }
 

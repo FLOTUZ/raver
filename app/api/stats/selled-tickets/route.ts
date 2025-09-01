@@ -1,6 +1,7 @@
+import { NextResponse } from "next/server";
+
 import { protectedRoute } from "@/lib";
 import { prisma } from "@/prisma";
-import { NextResponse } from "next/server";
 
 async function getSelledTickets() {
   // 1. Obtener datos de venta total
@@ -25,6 +26,7 @@ async function getSelledTickets() {
   // 2. Definir rangos de tiempo
   const today = new Date();
   const yesterday = new Date(today);
+
   yesterday.setDate(today.getDate() - 1);
 
   const startOfDay = (date: Date) => new Date(date.setHours(0, 0, 0, 0));
@@ -58,6 +60,7 @@ async function getSelledTickets() {
 
   // 4. Calcular el porcentaje de cambio (trend)
   let trend = 0;
+
   if (yesterdayTicketsCount > 0) {
     trend =
       ((todayTicketsCount - yesterdayTicketsCount) / yesterdayTicketsCount) *

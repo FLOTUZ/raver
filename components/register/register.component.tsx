@@ -1,5 +1,3 @@
-import { events } from "@/data/data";
-import { Event } from "@/interfaces";
 import {
   addToast,
   BreadcrumbItem,
@@ -13,6 +11,9 @@ import {
 import axios from "axios";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
+
+import { events } from "@/data/data";
+import { Event } from "@/interfaces";
 
 export const RegisterComponent = ({ eventId }: { eventId: string }) => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -52,6 +53,8 @@ export const RegisterComponent = ({ eventId }: { eventId: string }) => {
           });
         }
       } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log(error);
         addToast({
           title: "Error",
           description: "Hubo un error al enviar la entrada",
@@ -68,9 +71,11 @@ export const RegisterComponent = ({ eventId }: { eventId: string }) => {
     const fetchEvent = async () => {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       const event = events.find((event) => event.id === eventId);
+
       setEvent(event || null);
       setLoading(false);
     };
+
     fetchEvent();
   }, []);
 
@@ -112,14 +117,7 @@ export const RegisterComponent = ({ eventId }: { eventId: string }) => {
               onSubmit={form.handleSubmit}
             >
               <Input
-                name="name"
-                label="Nombre"
                 isRequired
-                labelPlacement="outside"
-                placeholder="Ingresa tu nombre"
-                value={form.values.name}
-                onChange={form.handleChange}
-                onBlur={form.handleBlur}
                 errorMessage={({ validationDetails }) => {
                   if (validationDetails.valueMissing) {
                     return "Por favor ingresa tu nombre";
@@ -127,17 +125,16 @@ export const RegisterComponent = ({ eventId }: { eventId: string }) => {
 
                   return null;
                 }}
+                label="Nombre"
+                labelPlacement="outside"
+                name="name"
+                placeholder="Ingresa tu nombre"
+                value={form.values.name}
+                onBlur={form.handleBlur}
+                onChange={form.handleChange}
               />
               <Input
-                name="email"
-                label="Email"
-                type="email"
                 isRequired
-                labelPlacement="outside"
-                placeholder="Ingresa tu email"
-                value={form.values.email}
-                onChange={form.handleChange}
-                onBlur={form.handleBlur}
                 errorMessage={({ validationDetails }) => {
                   if (validationDetails.valueMissing) {
                     return "Por favor ingresa tu email";
@@ -149,25 +146,20 @@ export const RegisterComponent = ({ eventId }: { eventId: string }) => {
 
                   return null;
                 }}
+                label="Email"
+                labelPlacement="outside"
+                name="email"
+                placeholder="Ingresa tu email"
+                type="email"
+                value={form.values.email}
+                onBlur={form.handleBlur}
+                onChange={form.handleChange}
               />
 
               <div className="flex gap-2 flex-row mt-8">
                 <Input
-                  className="w-25"
-                  name="country_code"
-                  label="Código de País"
                   isRequired
-                  labelPlacement="outside"
-                  placeholder="Ingresa tu código de país"
-                  value={form.values.country_code}
-                  onChange={(e) => {
-                    if (!e.target.value.startsWith("+")) {
-                      form.setFieldValue("country_code", `+${e.target.value}`);
-                      return;
-                    }
-                    form.setFieldValue("country_code", `${e.target.value}`);
-                  }}
-                  onBlur={form.handleBlur}
+                  className="w-25"
                   errorMessage={({ validationDetails }) => {
                     if (validationDetails.valueMissing) {
                       return "Por favor ingresa tu código de país";
@@ -175,20 +167,24 @@ export const RegisterComponent = ({ eventId }: { eventId: string }) => {
 
                     return null;
                   }}
+                  label="Código de País"
+                  labelPlacement="outside"
+                  name="country_code"
+                  placeholder="Ingresa tu código de país"
+                  value={form.values.country_code}
+                  onBlur={form.handleBlur}
+                  onChange={(e) => {
+                    if (!e.target.value.startsWith("+")) {
+                      form.setFieldValue("country_code", `+${e.target.value}`);
+
+                      return;
+                    }
+                    form.setFieldValue("country_code", `${e.target.value}`);
+                  }}
                 />
 
                 <Input
-                  name="whatsApp"
-                  label="WhatsApp a 10 dígitos"
-                  type="tel"
-                  minLength={10}
-                  maxLength={10}
                   isRequired
-                  labelPlacement="outside"
-                  placeholder="Ingresa tu número de WhatsApp a 10 dígitos"
-                  value={form.values.whatsApp}
-                  onChange={form.handleChange}
-                  onBlur={form.handleBlur}
                   errorMessage={({ validationDetails }) => {
                     if (validationDetails.valueMissing) {
                       return "Por favor ingresa tu número de WhatsApp";
@@ -204,6 +200,16 @@ export const RegisterComponent = ({ eventId }: { eventId: string }) => {
 
                     return validationDetails.patternMismatch;
                   }}
+                  label="WhatsApp a 10 dígitos"
+                  labelPlacement="outside"
+                  maxLength={10}
+                  minLength={10}
+                  name="whatsApp"
+                  placeholder="Ingresa tu número de WhatsApp a 10 dígitos"
+                  type="tel"
+                  value={form.values.whatsApp}
+                  onBlur={form.handleBlur}
+                  onChange={form.handleChange}
                 />
               </div>
               <p>
@@ -214,8 +220,8 @@ export const RegisterComponent = ({ eventId }: { eventId: string }) => {
               <Button
                 className="w-full"
                 color="primary"
-                type="submit"
                 isLoading={sendingTicket}
+                type="submit"
               >
                 Enviar
               </Button>
@@ -231,9 +237,9 @@ export const RegisterComponent = ({ eventId }: { eventId: string }) => {
 
           <div className="flex flex-col w-full items-center">
             <Image
-              src={"/paperplane.png"}
               alt={event.name}
               className="mx-auto self-center w-full h-[400px] object-contain mt-4"
+              src={"/paperplane.png"}
             />
           </div>
 

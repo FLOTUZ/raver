@@ -1,6 +1,7 @@
 "use client";
-import { useAdminAuth } from "@/providers";
 import { LoginComponent } from "./login.component";
+
+import { useAdminAuth } from "@/providers";
 
 export const AutorizationGuardComponent = ({
   children,
@@ -12,5 +13,6 @@ export const AutorizationGuardComponent = ({
   if (!admin) {
     return <LoginComponent />;
   }
+
   return <>{children}</>;
 };

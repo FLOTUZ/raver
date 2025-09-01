@@ -16,20 +16,15 @@ import clsx from "clsx";
 import NextLink from "next/link";
 import { FaUserCircle } from "react-icons/fa";
 
+import { ProfileDrawerComponent } from "./profile-drawer.component";
+
 import { Logo, SearchIcon } from "@/components/core/icons";
 import { siteConfig } from "@/config/site";
-import { ProfileDrawerComponent } from "./profile-drawer.component";
 
 export const Navbar = () => {
   const searchInput = (
     <Input
       aria-label="Buscar"
-      labelPlacement="outside"
-      placeholder="Buscar"
-      type="search"
-      startContent={
-        <SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0" />
-      }
       classNames={{
         inputWrapper: "bg-default-100",
         input: "text-sm",
@@ -39,6 +34,12 @@ export const Navbar = () => {
           K
         </Kbd>
       }
+      labelPlacement="outside"
+      placeholder="Buscar"
+      startContent={
+        <SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0" />
+      }
+      type="search"
     />
   );
 
@@ -57,7 +58,7 @@ export const Navbar = () => {
               <NextLink
                 className={clsx(
                   linkStyles({ color: "foreground" }),
-                  "data-[active=true]:text-primary data-[active=true]:font-medium"
+                  "data-[active=true]:text-primary data-[active=true]:font-medium",
                 )}
                 color="foreground"
                 href={item.href}
@@ -76,7 +77,7 @@ export const Navbar = () => {
         <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
         <NavbarItem className="hidden sm:flex gap-2">
           <ProfileDrawerComponent drawerItems={siteConfig.drawerItems}>
-            <FaUserCircle size={20} className="text-default-500" />
+            <FaUserCircle className="text-default-500" size={20} />
           </ProfileDrawerComponent>
         </NavbarItem>
       </NavbarContent>

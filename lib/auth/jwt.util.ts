@@ -1,5 +1,6 @@
-import { SessionPayload } from "@/interfaces";
 import jwt, { SignOptions } from "jsonwebtoken";
+
+import { SessionPayload } from "@/interfaces";
 
 const SECRET: string = process.env.JWT_SECRET || "supersecret";
 

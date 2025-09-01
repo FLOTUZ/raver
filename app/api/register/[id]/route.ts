@@ -1,6 +1,6 @@
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   const { id } = params;
 
@@ -14,9 +14,10 @@ export async function GET(
 
 export async function PATCH(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   const { id } = params;
+
   return Response.json({
     status: 201,
     method: request.method,
@@ -27,9 +28,10 @@ export async function PATCH(
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   const { id } = params;
+
   return Response.json({
     status: 201,
     method: request.method,

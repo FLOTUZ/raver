@@ -11,25 +11,43 @@
 
 <html>
   <body>
-  <h1>Instrucciones de pago</h1>
-    <br/>
-    <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
-    <h2>{{name}}, para completar tu pago en efectivo, sigue las siguientes instrucciones:</h2>
-    <ol>
-      <li>Dirigete con cualquiera de nuestros representante de RAVR.</li>
-      <li>Indica que deseas realizar un pago de tu entrada.</li>
-      <li>Realiza el pago con el monto exacto <strong>en efectivo</strong> de {{amount}} MXN.</strong></li>
-      <li>Muestra el QR de tu pase al representante de RAVR para ser escaneado.</li>
-      <li>Recibirás un correo de confirmación de tu pago y tu entrada.</li>
-      <li>Si tienes alguna duda, no dudes en contactarnos a traves de nuestro <a href="https://wa.me/{{whatsApp}}" target="_blank"> WhatsApp </a></li>
-    </ol>
+    <h1>Instrucciones de pago</h1>
+    <br />
+    <div
+      style="display: flex; justify-content: center; align-items: center; flex-direction: column;"
+    >
+      <h2>{{name}}, para completar tu pago en efectivo, sigue las siguientes
+        instrucciones:</h2>
+      <ol>
+        <li>Dirigete con cualquiera de nuestros representante de RAVR.</li>
+        <li>Indica que deseas realizar un pago de tu entrada.</li>
+        <li>Realiza el pago con el monto exacto
+          <strong>en efectivo</strong>
+          de
+          <strong>{{amount}} MXN.</strong></li>
+        <li>Muestra el QR de tu pase al representante de RAVR para ser
+          escaneado.</li>
+        <li>Recibirás un correo de confirmación de tu pago y tu entrada.</li>
+        <li>Si tienes alguna duda, no dudes en contactarnos a traves de nuestro
+          <a href="https://wa.me/{{whatsApp}}" target="_blank">
+            WhatsApp
+          </a></li>
+      </ol>
     </div>
-    <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
-      <img src="{{qrImageDataUrl}}" alt="QR Code" style="display: block; margin: 0 auto;" />
-      <p style="font-size: 20px">Ref:<strong style="font-size: 20px">{{ticketId}}</strong></p>
-    <br/>
-    <p>¡Gracias por ser parte de RAVR!</p>
+    <div
+      style="display: flex; justify-content: center; align-items: center; flex-direction: column;"
+    >
+      <img
+        src="{{qrImageDataUrl}}"
+        alt="QR Code"
+        style="display: block; margin: 0 auto;"
+      />
+      <p style="font-size: 20px">Ref:<strong
+          style="font-size: 20px"
+        >{{ticketId}}</strong></p>
+      <br />
+      <p>¡Gracias por ser parte de RAVR!</p>
     </div>
-    
+
   </body>
 </html>

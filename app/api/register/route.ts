@@ -1,9 +1,11 @@
-import { pdfGenerator, sendMail } from "@/lib";
 import QRCode from "qrcode";
+
+import { pdfGenerator, sendMail } from "@/lib";
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { name, email, telephone } = body;
 
     const ticketId = Math.floor(Math.random() * 100000).toString();
@@ -52,7 +54,7 @@ export async function POST(request: Request) {
         info,
         previewUrl,
       }),
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error: any) {
     return new Response(
@@ -60,7 +62,7 @@ export async function POST(request: Request) {
         method: request.method,
         error: error.message,
       }),
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

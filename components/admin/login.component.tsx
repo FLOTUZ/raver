@@ -1,10 +1,11 @@
 "use client";
 
-import { useAdminAuth } from "@/providers";
 import { Button, Card, CardBody, CardHeader, Input } from "@heroui/react";
 import { useFormik } from "formik";
 import { FaLock } from "react-icons/fa";
 import { HiMailOpen } from "react-icons/hi";
+
+import { useAdminAuth } from "@/providers";
 
 export const LoginComponent = () => {
   const { login, error, loading } = useAdminAuth();
@@ -17,6 +18,7 @@ export const LoginComponent = () => {
     },
     validate(values) {
       const errors: any = {};
+
       if (!values.email) {
         errors.email = "El correo es requerido";
       }
@@ -42,27 +44,27 @@ export const LoginComponent = () => {
           </div>
         </CardHeader>
         <CardBody className="px-6 py-4">
-          <form onSubmit={form.handleSubmit} className="flex flex-col gap-4">
+          <form className="flex flex-col gap-4" onSubmit={form.handleSubmit}>
             <Input
+              isRequired
               label="Correo"
-              type="email"
               name="email"
-              value={form.values.email}
-              onValueChange={(val) => form.setFieldValue("email", val)}
               placeholder="you@example.com"
               startContent={<HiMailOpen size={18} />}
-              isRequired
+              type="email"
+              value={form.values.email}
+              onValueChange={(val) => form.setFieldValue("email", val)}
             />
 
             <Input
+              isRequired
               label="Contraseña"
-              type="password"
               name="password"
-              value={form.values.password}
-              onValueChange={(val) => form.setFieldValue("password", val)}
               placeholder="••••••••"
               startContent={<FaLock size={18} />}
-              isRequired
+              type="password"
+              value={form.values.password}
+              onValueChange={(val) => form.setFieldValue("password", val)}
             />
 
             {error && <p className="text-red-500">{error}</p>}
@@ -77,11 +79,11 @@ export const LoginComponent = () => {
             </div> */}
 
             <Button
-              type="submit"
-              isLoading={loading}
-              className="mt-2"
               fullWidth
+              className="mt-2"
               color="primary"
+              isLoading={loading}
+              type="submit"
             >
               Ingresar
             </Button>

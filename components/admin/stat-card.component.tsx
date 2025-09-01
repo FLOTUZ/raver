@@ -10,6 +10,7 @@ export const StatCard = ({ saleStats }: { saleStats: StatCardData | null }) => {
   if (!saleStats) {
     return <div>No data</div>;
   }
+
   return (
     <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6 rounded-2xl shadow-lg">
       <div className="flex justify-between items-center mb-4">

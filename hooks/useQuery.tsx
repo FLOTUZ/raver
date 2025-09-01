@@ -11,7 +11,7 @@ interface UseQueryConfig<T> {
 }
 
 export function useQuery<InputInterface, ResponseInterface>(
-  config: UseQueryConfig<ResponseInterface>
+  config: UseQueryConfig<ResponseInterface>,
 ) {
   const { url, isLazy = false, onSuccess, onError } = config;
 
@@ -27,14 +27,17 @@ export function useQuery<InputInterface, ResponseInterface>(
       setError(null);
 
       const token = localStorage.getItem("token");
+
       if (!token) {
         const noTokenError = new AxiosError(
           "No JWT token found",
-          "NO_TOKEN_FOUND"
+          "NO_TOKEN_FOUND",
         );
+
         setError(noTokenError);
         setLoading(false);
         if (onError) onError(noTokenError);
+
         return null;
       }
 
@@ -49,19 +52,23 @@ export function useQuery<InputInterface, ResponseInterface>(
 
       try {
         const response = await axios.request<ResponseInterface>(axiosConfig);
+
         setData(response.data);
         if (onSuccess) onSuccess(response.data);
+
         return response.data;
       } catch (err) {
         const axiosError = err as AxiosError;
+
         setError(axiosError);
         if (onError) onError(axiosError);
+
         return null;
       } finally {
         setLoading(false);
       }
     },
-    [url, onSuccess, onError]
+    [url, onSuccess, onError],
   );
 
   useEffect(() => {

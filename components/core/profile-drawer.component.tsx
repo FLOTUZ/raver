@@ -8,6 +8,7 @@ import {
   useDisclosure,
 } from "@heroui/react";
 import { IconType } from "react-icons";
+
 import { Logo } from "./icons";
 import { ThemeSwitch } from "./theme-switch";
 
@@ -26,7 +27,7 @@ export const ProfileDrawerComponent = (props: ProfileDrawerComponentProps) => {
 
       <Drawer isOpen={isOpen} onOpenChange={onOpenChange}>
         <DrawerContent>
-          {(onClose) => (
+          {(_) => (
             <>
               <DrawerHeader className="flex flex-col gap-1 flex-direction-row items-center">
                 <Logo />
@@ -38,7 +39,7 @@ export const ProfileDrawerComponent = (props: ProfileDrawerComponentProps) => {
                     key={index}
                     className="w-full flex justify-start items-center gap-2 hover:bg-default-100 hover:text-default-600"
                     startContent={
-                      <item.icon size={20} className="text-default-400" />
+                      <item.icon className="text-default-400" size={20} />
                     }
                   >
                     <p className="text-sm color-red font-semibold">

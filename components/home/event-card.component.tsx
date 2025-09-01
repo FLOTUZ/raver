@@ -1,4 +1,3 @@
-import { Event } from "@/interfaces";
 import {
   addToast,
   Button,
@@ -10,7 +9,10 @@ import {
 import { format, parseISO, startOfDay } from "date-fns";
 import { useState } from "react";
 import { HiOutlineShare } from "react-icons/hi";
+
 import { HeartFilledIcon, HeartIcon } from "../core/icons";
+
+import { Event } from "@/interfaces";
 
 interface EventCardComponentProps {
   event: Event;
@@ -19,8 +21,19 @@ interface EventCardComponentProps {
 }
 export const EventCardComponent = (props: EventCardComponentProps) => {
   const [isLiked, setIsLiked] = useState<boolean>(false);
+
   return (
-    <div onClick={() => props.onClick(props.event)}>
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={() => props.onClick(props.event)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          props.onClick(props.event);
+        }
+      }}
+    >
       <Card
         isFooterBlurred
         className="w-full max-w-[350px] h-[550px] col-span-12 sm:col-span-5 cursor-pointer"
@@ -30,8 +43,8 @@ export const EventCardComponent = (props: EventCardComponentProps) => {
             <Button
               isIconOnly
               aria-label="Like"
-              variant="light"
               color="danger"
+              variant="light"
               onPress={() => {
                 setIsLiked(!isLiked);
               }}
@@ -48,7 +61,7 @@ export const EventCardComponent = (props: EventCardComponentProps) => {
               variant="light"
               onPress={() => {
                 navigator.clipboard.writeText(
-                  `${window.location.origin}/event/${props.event.id}`
+                  `${window.location.origin}/event/${props.event.id}`,
                 );
                 addToast({
                   title: "Enlace copiado",
