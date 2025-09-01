@@ -1,4 +1,5 @@
 import { PrismaClient, Role } from "@prisma/client";
+import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
 
@@ -11,12 +12,13 @@ async function main() {
 
   console.log("✅ Host created");
   // Crear User
+  const password = await bcrypt.hash("mani.codes", 10);
   await prisma.user.create({
     data: {
       email: "mani@manicodes.com",
       name: "Emmanuel Esquivel",
       role: Role.ADMIN,
-      password: "mani.codes",
+      password,
       host_id: host.id,
     },
   });
