@@ -1,7 +1,6 @@
 import fs from "fs";
 import { join } from "path";
 
-import Handlebars from "handlebars";
 import puppeteer, { PaperFormat } from "puppeteer";
 
 /**
@@ -26,12 +25,13 @@ export async function pdfGenerator({
   height?: string | number;
   context: Record<string, any>;
 }): Promise<Buffer> {
+  const handlebars = (await import("handlebars")).default;
   const templatePath = join(
     process.cwd(),
-    `lib/pdf/templates/${templateName}.hbs`,
+    `lib/pdf/templates/${templateName}.hbs`
   );
   const templateContent = fs.readFileSync(templatePath, "utf-8");
-  const template = Handlebars.compile(templateContent);
+  const template = handlebars.compile(templateContent);
   const html = template(context);
 
   const browser = await puppeteer.launch({
