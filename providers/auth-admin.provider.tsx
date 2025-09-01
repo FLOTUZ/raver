@@ -1,5 +1,13 @@
 "use client";
-import { createContext, ReactNode, useContext, useState } from "react";
+import { User } from "@prisma/client";
+import axios from "axios";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 interface Admin {
   id: string;
@@ -23,6 +31,7 @@ const AuthContext = createContext<AuthAdminContextType | undefined>(undefined);
 
 export const AuthAdminProvider = ({ children }: { children: ReactNode }) => {
   const [admin, setAdmin] = useState<Admin | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const login = async ({
     email,
@@ -31,18 +40,44 @@ export const AuthAdminProvider = ({ children }: { children: ReactNode }) => {
     email: string;
     password: string;
   }) => {
-    setAdmin({
-      id: "1",
-      name: "Emmanuel",
-      email: "mail@example.com",
-    });
+    setLoading(true);
+    try {
+      const response = await axios.post("/api/auth/login", { email, password });
+
+      if (response.status === 200) {
+        const data = response.data as { user: User; token: string };
+        setAdmin(response.data.user);
+        localStorage.setItem("admin", JSON.stringify(data.user));
+        localStorage.setItem("token", JSON.stringify(data.token));
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
+
     // opcional: guardar en localStorage/sessionStorage
   };
 
   const logout = () => {
+    setLoading(true);
     setAdmin(null);
-    // opcional: limpiar localStorage/sessionStorage
+    localStorage.removeItem("admin");
+    localStorage.removeItem("token");
+    setLoading(false);
   };
+
+  useEffect(() => {
+    const storedAdmin = localStorage.getItem("admin");
+    if (storedAdmin) {
+      setAdmin(JSON.parse(storedAdmin));
+    }
+    setLoading(false);
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <AuthContext.Provider value={{ admin, login, logout }}>

@@ -18,5 +18,5 @@ export async function POST(req: Request) {
     payload: { userId: user.id, email, name: user.name },
   });
 
-  return NextResponse.json({ token });
+  return NextResponse.json({ token, user });
 }
