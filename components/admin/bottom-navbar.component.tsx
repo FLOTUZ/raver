@@ -22,7 +22,7 @@ export const BottomNavBarComponent = () => {
           </Link>
         </div>
 
-        <button className="relative flex flex-col items-center justify-center -mt-16 mx-4 w-20 h-20 bg-blue-600 text-white rounded-full shadow-lg ring-4 ring-black">
+        <button className="relative flex flex-col items-center justify-center -mt-16 mx-4 w-20 h-20 bg-blue-600 text-white rounded-full shadow-lg ring-4 ring-black transform transition-transform duration-200 hover:scale-110 active:scale-105">
           {/* Contenido del botón */}
           <span className="text-xl">
             <FaQrcode size={32} />
