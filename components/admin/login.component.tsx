@@ -3,13 +3,11 @@
 import { useAdminAuth } from "@/providers";
 import { Button, Card, CardBody, CardHeader, Input } from "@heroui/react";
 import { useFormik } from "formik";
-import { useState } from "react";
 import { FaLock } from "react-icons/fa";
 import { HiMailOpen } from "react-icons/hi";
 
 export const LoginComponent = () => {
-  const { login } = useAdminAuth();
-  const [loading, setLoading] = useState(false);
+  const { login, error, loading } = useAdminAuth();
 
   const form = useFormik({
     initialValues: {
@@ -30,9 +28,7 @@ export const LoginComponent = () => {
       }
     },
     onSubmit: async (values) => {
-      setLoading(true);
       await login(values);
-      setLoading(false);
     },
   });
 
@@ -68,6 +64,8 @@ export const LoginComponent = () => {
               startContent={<FaLock size={18} />}
               isRequired
             />
+
+            {error && <p className="text-red-500">{error}</p>}
 
             {/*  <div className="flex items-center justify-between">
               <Checkbox

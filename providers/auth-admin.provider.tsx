@@ -1,6 +1,6 @@
 "use client";
 import { User } from "@prisma/client";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import {
   createContext,
   ReactNode,
@@ -9,14 +9,8 @@ import {
   useState,
 } from "react";
 
-interface Admin {
-  id: string;
-  name: string;
-  email: string;
-}
-
 interface AuthAdminContextType {
-  admin: Admin | null;
+  admin: User | null;
   login: ({
     email,
     password,
@@ -25,13 +19,16 @@ interface AuthAdminContextType {
     password: string;
   }) => Promise<void>;
   logout: () => void;
+  error: string | null;
+  loading: boolean;
 }
 
 const AuthContext = createContext<AuthAdminContextType | undefined>(undefined);
 
 export const AuthAdminProvider = ({ children }: { children: ReactNode }) => {
-  const [admin, setAdmin] = useState<Admin | null>(null);
+  const [admin, setAdmin] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const login = async ({
     email,
@@ -51,12 +48,12 @@ export const AuthAdminProvider = ({ children }: { children: ReactNode }) => {
         localStorage.setItem("token", JSON.stringify(data.token));
         setLoading(false);
       }
-    } catch (error) {
-      console.error(error);
+    } catch (error: AxiosError | any) {
+      if (error instanceof AxiosError) {
+        setError(error.response?.data.error);
+      }
       setLoading(false);
     }
-
-    // opcional: guardar en localStorage/sessionStorage
   };
 
   const logout = () => {
@@ -80,13 +77,12 @@ export const AuthAdminProvider = ({ children }: { children: ReactNode }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ admin, login, logout }}>
+    <AuthContext.Provider value={{ admin, login, logout, error, loading }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-// Hook para usar el contexto
 export const useAdminAuth = (): AuthAdminContextType => {
   const context = useContext(AuthContext);
   if (!context) {
