@@ -4,13 +4,13 @@ import { NextResponse } from "next/server";
 
 async function getSelledTickets() {
   // 1. Obtener datos de venta total
-  const tickets_sold = await prisma.ticket.count({
+  const tickets_sold = await prisma.preRegister.count({
     where: {
       is_paid: true,
     },
   });
 
-  const totalEarningsResult = await prisma.ticket.aggregate({
+  const totalEarningsResult = await prisma.preRegister.aggregate({
     _sum: {
       price: true,
     },
@@ -36,7 +36,7 @@ async function getSelledTickets() {
   const yesterdayEnd = endOfDay(new Date(yesterday));
 
   // 3. Consultar tickets pagados por día
-  const todayTicketsCount = await prisma.ticket.count({
+  const todayTicketsCount = await prisma.preRegister.count({
     where: {
       is_paid: true,
       created_at: {
@@ -46,7 +46,7 @@ async function getSelledTickets() {
     },
   });
 
-  const yesterdayTicketsCount = await prisma.ticket.count({
+  const yesterdayTicketsCount = await prisma.preRegister.count({
     where: {
       is_paid: true,
       created_at: {
