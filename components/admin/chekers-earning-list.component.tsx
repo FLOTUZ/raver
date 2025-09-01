@@ -1,12 +1,8 @@
-import { useQuery } from "@/hooks/useQuery";
+"use client";
 import { Checker } from "@/interfaces";
 import { FaMoneyBillWave, FaUserCircle } from "react-icons/fa";
 
-export const CheckersEarningsList = () => {
-  const { data: checkers } = useQuery<{}, Checker[]>({
-    url: "/api/stats/earnings-by-checker",
-  });
-
+export const CheckersEarningsList = ({ checkers }: { checkers: Checker[] }) => {
   return (
     <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-200">
       <div className="flex justify-between items-center mb-4 text-gray-800">
