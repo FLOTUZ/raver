@@ -1,14 +1,7 @@
 "use client";
 
 import { useAdminAuth } from "@/providers";
-import {
-  Button,
-  Card,
-  CardBody,
-  CardHeader,
-  Checkbox,
-  Input,
-} from "@heroui/react";
+import { Button, Card, CardBody, CardHeader, Input } from "@heroui/react";
 import { useFormik } from "formik";
 import { useState } from "react";
 import { FaLock } from "react-icons/fa";
@@ -76,14 +69,14 @@ export const LoginComponent = () => {
               isRequired
             />
 
-            <div className="flex items-center justify-between">
+            {/*  <div className="flex items-center justify-between">
               <Checkbox
                 isSelected={form.values.remember}
                 onValueChange={(val) => form.setFieldValue("remember", val)}
               >
                 Recuérdame
               </Checkbox>
-            </div>
+            </div> */}
 
             <Button
               type="submit"
