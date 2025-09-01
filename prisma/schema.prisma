@@ -1,0 +1,78 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Host {
+  id     String  @id @default(cuid())
+  name   String
+  users  User[]
+  events Event[]
+}
+
+enum Role {
+  ADMIN
+  CHEKER
+}
+
+model User {
+  id       String    @id @default(cuid())
+  email    String    @unique
+  name     String
+  password String
+  host_id  String
+  role     Role
+  host     Host      @relation(fields: [host_id], references: [id])
+  checkers Checker[]
+}
+
+model Checker {
+  id              String   @id @default(cuid())
+  amount          Decimal  @default(0) @db.Decimal(10, 2)
+  user_id         String
+  user            User     @relation(fields: [user_id], references: [id])
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
+  checked_tickets Ticket[]
+}
+
+model Event {
+  id          String    @id @default(cuid())
+  name        String
+  description String?
+  image       String
+  banner      String?
+  init_date   DateTime
+  end_date    DateTime?
+  location    String
+  start_time  String
+  end_time    String?
+  host_id     String
+  host        Host      @relation(fields: [host_id], references: [id])
+  tickets     Ticket[]
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+}
+
+model Ticket {
+  id                String    @id @default(cuid())
+  buyer_name        String
+  buyer_email       String
+  buyer_phone       String
+  payment_reference String
+  price             Decimal   @default(0) @db.Decimal(10, 2)
+  is_paid           Boolean   @default(false)
+  is_dynamic        Boolean   @default(false)
+  mail_sent         Boolean   @default(false)
+  event_id          String
+  event             Event     @relation(fields: [event_id], references: [id])
+  checker_id        String?
+  checked_by        Checker?  @relation(fields: [checker_id], references: [id])
+  cheked_at         DateTime?
+  created_at        DateTime  @default(now())
+  updated_at        DateTime  @updatedAt
+}
