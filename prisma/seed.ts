@@ -12,17 +12,35 @@ async function main() {
 
   console.log("✅ Host created");
   // Crear User
-  const password = await bcrypt.hash("mani.codes", 10);
+
   await prisma.user.create({
     data: {
       email: "mani@manicodes.com",
       name: "Emmanuel Esquivel",
       role: Role.ADMIN,
-      password,
+      password: await bcrypt.hash("mani.codes", 10),
       host_id: host.id,
     },
   });
-  console.log("✅ User created");
+
+  const checker = await prisma.user.create({
+    data: {
+      email: "sarahi@manicodes.com",
+      name: "Sarahi Esquivel",
+      role: Role.CHEKER,
+      password: await bcrypt.hash("sarahi.codes", 10),
+      host_id: host.id,
+    },
+  });
+
+  const checkerEarning = await prisma.checker.create({
+    data: {
+      amount: 0,
+      user_id: checker.id,
+    },
+  });
+
+  console.log("✅ Users created");
   // Crear Event
   await prisma.event.create({
     data: {
