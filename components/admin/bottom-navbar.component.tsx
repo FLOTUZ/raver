@@ -21,14 +21,15 @@ export const BottomNavBarComponent = () => {
             <span>Dashboard</span>
           </Link>
         </div>
-
-        <button className="relative flex flex-col items-center justify-center -mt-16 mx-4 w-20 h-20 bg-blue-600 text-white rounded-full shadow-lg ring-4 ring-black transform transition-transform duration-200 hover:scale-110 active:scale-105">
-          {/* Contenido del botón */}
-          <span className="text-xl">
-            <FaQrcode size={32} />
-          </span>
-          <span className="text-xs mt-1">Escanear</span>
-        </button>
+        <Link href="/scanner">
+          <button className="relative flex flex-col items-center justify-center -mt-16 mx-4 w-20 h-20 bg-blue-600 text-white rounded-full shadow-lg ring-4 ring-black transform transition-transform duration-200 hover:scale-110 active:scale-105">
+            {/* Contenido del botón */}
+            <span className="text-xl">
+              <FaQrcode size={32} />
+            </span>
+            <span className="text-xs mt-1">Escanear</span>
+          </button>
+        </Link>
 
         {/* Enlaces de la derecha */}
         <div className="flex flex-1 justify-around">
