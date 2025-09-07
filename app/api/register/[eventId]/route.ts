@@ -38,7 +38,8 @@ export async function POST(
         },
         ...event,
         description:
-          event.description && markdownToHTML({ markdown: event.description }),
+          event.description &&
+          (await markdownToHTML({ markdown: event.description })),
         host: event.host.name,
       },
     });
