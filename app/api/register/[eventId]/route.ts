@@ -3,11 +3,11 @@ import { prisma } from "@/prisma";
 
 export async function POST(
   request: Request,
-  { params }: { params: { eventId: string } }
+  context: { params: Promise<{ eventId: string }> }
 ) {
-  try {
-    const { eventId } = params;
+  const { eventId } = await context.params;
 
+  try {
     const body = await request.json();
     const { name, email, telephone } = body;
 
@@ -51,6 +51,7 @@ export async function POST(
       { status: 201 }
     );
   } catch (error: any) {
+    console.error(error);
     return new Response(
       JSON.stringify({
         method: request.method,

@@ -92,7 +92,7 @@ export default defineConfig([
     files: ["**/*.ts", "**/*.tsx"],
 
     rules: {
-      "no-console": "warn",
+      "no-console": "off",
       "react/prop-types": "off",
       "react/jsx-uses-react": "off",
       "react/react-in-jsx-scope": "off",
@@ -103,7 +103,7 @@ export default defineConfig([
       "no-unused-vars": "off",
       "unused-imports/no-unused-vars": "off",
       "unused-imports/no-unused-imports": "warn",
-
+      "padding-line-between-statements": "off",
       "@typescript-eslint/no-unused-vars": [
         "warn",
         {

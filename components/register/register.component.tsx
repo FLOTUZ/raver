@@ -40,7 +40,7 @@ export const RegisterComponent = ({ eventId }: { eventId: string }) => {
       };
 
       try {
-        const response = await axios.post("/api/register", payload);
+        const response = await axios.post(`/api/register/${eventId}`, payload);
 
         if (response.status === 201) {
           form.resetForm();
