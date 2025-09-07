@@ -36,7 +36,8 @@ export const RegisterComponent = ({ eventId }: { eventId: string }) => {
     onSubmit: async (values) => {
       setSendingTicket(true);
       const payload = {
-        ...values,
+        name: values.name,
+        email: values.email,
         telephone: values.country_code.slice(1) + "1" + values.whatsApp,
       };
 
