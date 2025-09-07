@@ -1,0 +1,60 @@
+<div
+  style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #ddd; border-radius: 8px; overflow: hidden;"
+>
+
+  <img
+    src="{{this.banner}}"
+    alt="Banner del evento"
+    style="width: 100%; height: auto; display: block;"
+  />
+
+  <div style="padding: 20px;">
+
+    <h1 style="color: #333;">¡Hola, {{userData.name}}!</h1>
+    <p style="font-size: 16px; color: #555;">¡Tu pre-registro para el evento **{{this.name}}**
+      ha sido un éxito! 🎉</p>
+    <p style="font-size: 14px; color: #777;">A continuación, te mostramos los
+      detalles del evento y la información que registraste:</p>
+
+    ---
+
+    <h2 style="color: #444;">Detalles del Evento</h2>
+    <p style="font-size: 16px; color: #555;"><strong>Nombre:</strong>
+      {{this.name}}</p>
+    <p style="font-size: 16px; color: #555;"><strong>Lugar:</strong>
+      {{this.location}}</p>
+    <p style="font-size: 16px; color: #555;"><strong>Fecha:</strong>
+      {{this.init_date}}</p>
+    <p style="font-size: 16px; color: #555;"><strong>Hora:</strong>
+      {{this.start_time}}
+      -
+      {{this.end_time}}</p>
+
+    <p
+      style="white-space: pre-wrap; font-size: 14px; color: #666; line-height: 1.6;"
+    >{{this.description}}</p>
+
+    ---
+
+    <h2 style="color: #444;">Tu Información Registrada</h2>
+    <ul style="list-style-type: none; padding: 0;">
+      <li style="font-size: 16px; color: #555; margin-bottom: 8px;"><strong
+        >Nombre:</strong>
+        {{userData.name}}</li>
+      <li style="font-size: 16px; color: #555; margin-bottom: 8px;"><strong
+        >Email:</strong>
+        {{userData.email}}</li>
+      <li style="font-size: 16px; color: #555;"><strong>Teléfono:</strong>
+        {{userData.telephone}}</li>
+    </ul>
+
+    <hr
+      style="border: 0; height: 1px; background-color: #ddd; margin: 20px 0;"
+    />
+
+    <p style="font-size: 14px; color: #888; text-align: center;">¡Esperamos
+      verte allí! Cualquier duda, contacta al host:
+      {{this.host}}.</p>
+
+  </div>
+</div>

@@ -60,19 +60,16 @@ model Event {
 }
 
 model PreRegister {
-  id                String   @id @default(cuid())
-  name              String
-  email             String
-  phone             String
-  payment_reference String
-  price             Decimal  @default(0) @db.Decimal(10, 2)
-  is_paid           Boolean  @default(false)
-  is_sended         Boolean  @default(false)
-  event_id          String
-  event             Event    @relation(fields: [event_id], references: [id])
-  ticket            Ticket?
-  created_at        DateTime @default(now())
-  updated_at        DateTime @updatedAt
+  id         String   @id @default(cuid())
+  name       String
+  email      String
+  telephone  String
+  is_sended  Boolean  @default(false)
+  event_id   String
+  event      Event    @relation(fields: [event_id], references: [id])
+  ticket     Ticket?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
 
 model Ticket {
