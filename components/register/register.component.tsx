@@ -106,7 +106,7 @@ export const RegisterComponent = ({ eventId }: { eventId: string }) => {
         <>
           <h1 className="text-2xl font-bold mt-4 ">Registro de Entradas</h1>
           <p className="text-lg text-default-400">
-            Completa el formulario para enviarte las instrucciones de pago.
+            Completa tu registro a la lista de invitados.
           </p>
 
           <div className="mt-4 flex items-center justify-center">
@@ -213,9 +213,8 @@ export const RegisterComponent = ({ eventId }: { eventId: string }) => {
                 />
               </div>
               <p>
-                <strong>Nota:</strong> Escribe correctamente tus datos de lo
-                contrario no podrás realizar el pago ni recibir tu entrada
-                correctamente.
+                <strong>Nota:</strong> Escribe correctamente tus datos de
+                contacto, serán usados para enviar tus entradas posteriormente.
               </p>
               <Button
                 className="w-full"
