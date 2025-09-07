@@ -16,13 +16,18 @@ export async function POST(
     });
 
     const { id: preRegisterId } = await prisma.preRegister.create({
-      data: body,
+      data: {
+        name,
+        email,
+        telephone: telephone,
+        event_id: event.id,
+      },
     });
 
     const { info, previewUrl } = await sendMail({
       to: email,
       subject: "RAVR- Registro de invitación",
-      template: "invitation-confirmation",
+      template: "register-confirmation",
       context: {
         userData: {
           name,
@@ -52,6 +57,7 @@ export async function POST(
     );
   } catch (error: any) {
     console.error(error);
+
     return new Response(
       JSON.stringify({
         method: request.method,
