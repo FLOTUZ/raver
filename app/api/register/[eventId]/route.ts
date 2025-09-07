@@ -37,10 +37,10 @@ export async function POST(
           telephone,
         },
         ...event,
+        host: event.host.name,
         description:
           event.description &&
           (await markdownToHTML({ markdown: event.description })),
-        host: event.host.name,
       },
     });
 
