@@ -14,15 +14,6 @@ export const siteConfig = {
       label: "Blog",
       href: "/blog",
     },
-
-    {
-      label: "Sobre RAVR",
-      href: "/about",
-    },
-    {
-      label: "Dashboard",
-      href: "/dashboard",
-    },
   ],
 
   navMenuItems: [
@@ -34,14 +25,7 @@ export const siteConfig = {
       label: "Blog",
       href: "/blog",
     },
-    {
-      label: "Dashboard",
-      href: "/dashboard",
-    },
-    {
-      label: "Sobre nosotros",
-      href: "/about",
-    },
+
     {
       label: "Logout",
       href: "/logout",
@@ -49,8 +33,8 @@ export const siteConfig = {
   ],
   drawerItems: [
     {
-      label: "Mi cuenta",
-      href: "/my-account",
+      label: "Admin",
+      href: "/admin",
       icon: FaUserCircle,
     },
   ],

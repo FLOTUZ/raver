@@ -7,6 +7,7 @@ import {
   DrawerHeader,
   useDisclosure,
 } from "@heroui/react";
+import Link from "next/link";
 import { IconType } from "react-icons";
 
 import { Logo } from "./icons";
@@ -35,17 +36,18 @@ export const ProfileDrawerComponent = (props: ProfileDrawerComponentProps) => {
               </DrawerHeader>
               <DrawerBody>
                 {props.drawerItems.map((item, index) => (
-                  <Button
-                    key={index}
-                    className="w-full flex justify-start items-center gap-2 hover:bg-default-100 hover:text-default-600"
-                    startContent={
-                      <item.icon className="text-default-400" size={20} />
-                    }
-                  >
-                    <p className="text-sm color-red font-semibold">
-                      {item.label}
-                    </p>
-                  </Button>
+                  <Link key={index} href={item.href}>
+                    <Button
+                      className="w-full flex justify-start items-center gap-2 hover:bg-default-100 hover:text-default-600"
+                      startContent={
+                        <item.icon className="text-default-400" size={20} />
+                      }
+                    >
+                      <p className="text-sm color-red font-semibold">
+                        {item.label}
+                      </p>
+                    </Button>
+                  </Link>
                 ))}
               </DrawerBody>
               <DrawerFooter>
