@@ -3,15 +3,16 @@
 >
 
   <img
-    src="{{this.banner}}"
+    src="{{banner}}"
     alt="Banner del evento"
     style="width: 100%; height: auto; display: block;"
   />
 
   <div style="padding: 20px;">
 
-    <h1 style="color: #333;">¡Hola, {{userData.name}}!</h1>
-    <p style="font-size: 16px; color: #555;">¡Tu pre-registro para el evento **{{this.name}}**
+    <h1 style="color: #333;">¡Hola, {{user.name}}!</h1>
+    <p style="font-size: 16px; color: #555;">¡Tu pre-registro para el evento
+      <strong>{{name}}</strong>
       ha sido un éxito! 🎉</p>
     <p style="font-size: 14px; color: #777;">A continuación, te mostramos los
       detalles del evento y la información que registraste:</p>
@@ -20,19 +21,22 @@
 
     <h2 style="color: #444;">Detalles del Evento</h2>
     <p style="font-size: 16px; color: #555;"><strong>Nombre:</strong>
-      {{this.name}}</p>
+      {{name}}</p>
     <p style="font-size: 16px; color: #555;"><strong>Lugar:</strong>
-      {{this.location}}</p>
+      {{location}}</p>
     <p style="font-size: 16px; color: #555;"><strong>Fecha:</strong>
-      {{this.init_date}}</p>
+      {{init_date}}</p>
     <p style="font-size: 16px; color: #555;"><strong>Hora:</strong>
-      {{this.start_time}}
+      {{start_time}}
       -
-      {{this.end_time}}</p>
+      {{end_time}}</p>
 
+    ---
+    <br />
+    <h2 style="color: #444;">Descripción</h2>
     <p
-      style="white-space: pre-wrap; font-size: 14px; color: #666; line-height: 1.6;"
-    >{{this.description}}</p>
+      style="white-space: pre-wrap; font-size: 14px; color: #666;"
+    >{{{description}}}</p>
 
     ---
 
@@ -40,12 +44,12 @@
     <ul style="list-style-type: none; padding: 0;">
       <li style="font-size: 16px; color: #555; margin-bottom: 8px;"><strong
         >Nombre:</strong>
-        {{userData.name}}</li>
+        {{user.name}}</li>
       <li style="font-size: 16px; color: #555; margin-bottom: 8px;"><strong
         >Email:</strong>
-        {{userData.email}}</li>
+        {{user.email}}</li>
       <li style="font-size: 16px; color: #555;"><strong>Teléfono:</strong>
-        {{userData.telephone}}</li>
+        {{user.telephone}}</li>
     </ul>
 
     <hr
@@ -54,7 +58,7 @@
 
     <p style="font-size: 14px; color: #888; text-align: center;">¡Esperamos
       verte allí! Cualquier duda, contacta al host:
-      {{this.host}}.</p>
+      <strong>{{host}}</strong>.</p>
 
   </div>
 </div>

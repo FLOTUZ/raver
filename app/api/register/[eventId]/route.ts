@@ -1,3 +1,7 @@
+import DOMPurify from "dompurify";
+import { JSDOM } from "jsdom";
+import { marked } from "marked";
+
 import { sendMail } from "@/lib";
 import { prisma } from "@/prisma";
 
@@ -25,26 +29,27 @@ export async function POST(
       },
     });
 
+    const window = new JSDOM("").window;
+    const purify = DOMPurify(window);
+
+    const descriptionHTML = event.description
+      ? await marked(event.description)
+      : "";
+    const safeHTML = purify.sanitize(descriptionHTML);
+
     const { info, previewUrl } = await sendMail({
       to: email,
       subject: "RAVR- Registro de invitación",
       template: "register-confirmation",
       context: {
-        userData: {
+        user: {
           name,
           email,
           telephone,
         },
-        eventData: {
-          banner: event.banner,
-          name: event.name,
-          location: event.location,
-          init_date: event.init_date,
-          start_time: event.start_time,
-          end_time: event.end_time,
-          description: event.description,
-          host: event.host.name,
-        },
+        ...event,
+        description: safeHTML,
+        host: event.host.name,
       },
     });
 
