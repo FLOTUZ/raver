@@ -1,15 +1,15 @@
 "use client";
 import { BreadcrumbItem, Breadcrumbs } from "@heroui/breadcrumbs";
 import { Button, Image, Progress } from "@heroui/react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
+import { PiIdentificationBadgeFill } from "react-icons/pi";
 import ReactMarkdown from "react-markdown";
 import remarkBreaks from "remark-breaks";
 import remarkGfm from "remark-gfm";
-import Link from "next/link";
-import { ImTicket } from "react-icons/im";
 
-import { Event } from "@/interfaces";
 import { events } from "@/data/data";
+import { Event } from "@/interfaces";
 
 export const ShowEventView = ({ eventId }: { eventId: string }) => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -64,7 +64,7 @@ export const ShowEventView = ({ eventId }: { eventId: string }) => {
       </div>
 
       {/* Event details */}
-      <div className="w-full flex justify-center mt-6">
+      <div className="w-full flex justify-center mt-6 mb-16">
         <div className="w-full max-w-3xl text-start">
           <h1 className="text-3xl font-bold self-center">{event?.name}</h1>
 
@@ -74,16 +74,16 @@ export const ShowEventView = ({ eventId }: { eventId: string }) => {
               {event.description}
             </ReactMarkdown>
           </div>
-          <Link href={`/events/${event.id}/buy`}>
+          <Link href={`/events/${event.id}/register`}>
             <Button
               className="px-8 w-full"
-              color="secondary"
+              color="primary"
               size="lg"
               variant="shadow"
             >
               <span className="inline-flex items-center gap-2">
-                Comprar pase
-                <ImTicket className="w-5 h-5" />
+                Pre-registro
+                <PiIdentificationBadgeFill size={20} />
               </span>
             </Button>
           </Link>

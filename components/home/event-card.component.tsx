@@ -61,7 +61,7 @@ export const EventCardComponent = (props: EventCardComponentProps) => {
               variant="light"
               onPress={() => {
                 navigator.clipboard.writeText(
-                  `${window.location.origin}/event/${props.event.id}`,
+                  `${window.location.origin}/event/${props.event.id}`
                 );
                 addToast({
                   title: "Enlace copiado",
@@ -111,7 +111,7 @@ export const EventCardComponent = (props: EventCardComponentProps) => {
                 props.onClick(props.event);
               }}
             >
-              Comprar Entradas
+              Ver
             </Button>
           </div>
         </CardFooter>

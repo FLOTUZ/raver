@@ -4,11 +4,11 @@ import { useParams } from "next/navigation";
 
 import { RegisterComponent } from "@/components/register/register.component";
 
-const ButPage = () => {
+const RegisterPage = () => {
   const params = useParams();
   const { id } = params;
 
   return <>{id && <RegisterComponent eventId={id.toString()} />}</>;
 };
 
-export default ButPage;
+export default RegisterPage;

@@ -91,7 +91,7 @@ export const RegisterComponent = ({ eventId }: { eventId: string }) => {
   }
 
   return (
-    <>
+    <div className=" p-4">
       <Breadcrumbs variant="bordered">
         <BreadcrumbItem href="/">Home</BreadcrumbItem>
         <BreadcrumbItem>Events</BreadcrumbItem>
@@ -104,7 +104,7 @@ export const RegisterComponent = ({ eventId }: { eventId: string }) => {
       </Breadcrumbs>
       {showForm ? (
         <>
-          <h1 className="text-2xl font-bold mt-4">Registro de Entradas</h1>
+          <h1 className="text-2xl font-bold mt-4 ">Registro de Entradas</h1>
           <p className="text-lg text-default-400">
             Completa el formulario para enviarte las instrucciones de pago.
           </p>
@@ -252,6 +252,6 @@ export const RegisterComponent = ({ eventId }: { eventId: string }) => {
           </Button>
         </>
       )}
-    </>
+    </div>
   );
 };
