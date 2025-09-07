@@ -46,8 +46,8 @@ export const RegisterComponent = ({ eventId }: { eventId: string }) => {
           form.resetForm();
           setShowForm(false);
           addToast({
-            title: "Entrada Enviada",
-            description: "Tu entrada ha sido enviada con exito",
+            title: "Confirmación de registro",
+            description: "Tu invitación se ha enviado correctamente",
             variant: "solid",
             color: "success",
           });
@@ -231,7 +231,7 @@ export const RegisterComponent = ({ eventId }: { eventId: string }) => {
         <>
           <h1 className="text-2xl font-bold mt-4">Gracias por registrarte</h1>
           <p className="text-lg text-default-400">
-            Las instrucciones de pago han sido enviadas a tu correo electrónico
+            Te enviamos un correo con la confirmación de tu registro.
           </p>
 
           <div className="flex flex-col w-full items-center">
@@ -247,7 +247,7 @@ export const RegisterComponent = ({ eventId }: { eventId: string }) => {
             color="primary"
             onPress={() => setShowForm(true)}
           >
-            Registrar otra entrada
+            Registrar a otra persona
           </Button>
         </>
       )}
