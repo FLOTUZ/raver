@@ -2,31 +2,20 @@
 import { BreadcrumbItem, Breadcrumbs } from "@heroui/breadcrumbs";
 import { Button, Image, Progress } from "@heroui/react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { PiIdentificationBadgeFill } from "react-icons/pi";
 import ReactMarkdown from "react-markdown";
 import remarkBreaks from "remark-breaks";
 import remarkGfm from "remark-gfm";
 
-import { events } from "@/data/data";
+import { useQuery } from "@/hooks/useQuery";
 import { Event } from "@/interfaces";
 
 export const ShowEventView = ({ eventId }: { eventId: string }) => {
-  const [loading, setLoading] = useState<boolean>(true);
-  const [event, setEvent] = useState<Event | null>(null);
+  const { data: event, loading: eventLoading } = useQuery<{}, Event>({
+    url: `/api/events/${eventId}`,
+  });
 
-  useEffect(() => {
-    setLoading(true);
-    const fetchEvent = async () => {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      setEvent(() => events.find((event) => event.id === eventId) || null);
-      setLoading(false);
-    };
-
-    fetchEvent();
-  }, []);
-
-  if (loading && event === null) {
+  if (eventLoading && event === null) {
     return (
       <Progress
         isIndeterminate
@@ -42,7 +31,7 @@ export const ShowEventView = ({ eventId }: { eventId: string }) => {
   }
 
   return (
-    <>
+    <div className="p-4">
       <Breadcrumbs variant="bordered">
         <BreadcrumbItem href="/">Home</BreadcrumbItem>
         <BreadcrumbItem>Events</BreadcrumbItem>
@@ -89,6 +78,6 @@ export const ShowEventView = ({ eventId }: { eventId: string }) => {
           </Link>
         </div>
       </div>
-    </>
+    </div>
   );
 };

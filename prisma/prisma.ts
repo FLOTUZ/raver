@@ -8,7 +8,7 @@ const prisma = new PrismaClient().$extends({
         try {
           const result = await query(args);
 
-          console.log(`[Prisma] ✅ ${model}.${operation} success`);
+          console.log(`[Prisma] ${model}.${operation} success`);
 
           return result;
         } catch (error) {

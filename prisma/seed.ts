@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { PrismaClient, Role } from "@prisma/client";
 import bcrypt from "bcrypt";
 
@@ -45,7 +44,6 @@ async function main() {
   // Crear Event
   await prisma.event.create({
     data: {
-      id: "1",
       name: "🎃 Noche de Disfraces 2025 👻",
       description: `
 ¡La espera terminó! Celebremos la noche con nuestra gran **fiesta de disfraces de Halloween 2025** que no olvidarás.  
