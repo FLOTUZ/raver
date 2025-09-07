@@ -12,7 +12,7 @@ import { events } from "@/data/data";
 import { Event } from "@/interfaces";
 
 export const ShowEventView = ({ eventId }: { eventId: string }) => {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [event, setEvent] = useState<Event | null>(null);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ export const ShowEventView = ({ eventId }: { eventId: string }) => {
     fetchEvent();
   }, []);
 
-  if (loading) {
+  if (loading && event === null) {
     return (
       <Progress
         isIndeterminate
@@ -37,7 +37,7 @@ export const ShowEventView = ({ eventId }: { eventId: string }) => {
     );
   }
 
-  if (!event) {
+  if (!event || event === null) {
     return <div>Event not found</div>;
   }
 
