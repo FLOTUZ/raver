@@ -13,6 +13,7 @@ export async function POST(
 
     const event = await prisma.event.findFirstOrThrow({
       where: { id: eventId },
+      include: { host: true },
     });
 
     const { id: preRegisterId } = await prisma.preRegister.create({
@@ -34,7 +35,16 @@ export async function POST(
           email,
           telephone,
         },
-        eventData: event,
+        eventData: {
+          banner: event.banner,
+          name: event.name,
+          location: event.location,
+          init_date: event.init_date,
+          start_time: event.start_time,
+          end_time: event.end_time,
+          description: event.description,
+          host: event.host.name,
+        },
       },
     });
 
