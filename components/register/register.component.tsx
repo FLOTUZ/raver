@@ -10,17 +10,18 @@ import {
 } from "@heroui/react";
 import axios from "axios";
 import { useFormik } from "formik";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-import { events } from "@/data/data";
+import { useQuery } from "@/hooks/useQuery";
 import { Event } from "@/interfaces";
 
 export const RegisterComponent = ({ eventId }: { eventId: string }) => {
-  const [loading, setLoading] = useState<boolean>(false);
-  const [event, setEvent] = useState<Event | null>(null);
-
   const [sendingTicket, setSendingTicket] = useState<boolean>(false);
   const [showForm, setShowForm] = useState<boolean>(true);
+
+  const { data: event, loading: eventLoading } = useQuery<{}, Event>({
+    url: `/api/events/${eventId}`,
+  });
 
   const form = useFormik({
     enableReinitialize: true,
@@ -29,7 +30,7 @@ export const RegisterComponent = ({ eventId }: { eventId: string }) => {
       email: "",
       country_code: "+52",
       whatsApp: "",
-      eventId,
+      eventId: eventId,
     },
 
     onSubmit: async (values) => {
@@ -53,7 +54,6 @@ export const RegisterComponent = ({ eventId }: { eventId: string }) => {
           });
         }
       } catch (error) {
-        // eslint-disable-next-line no-console
         console.log(error);
         addToast({
           title: "Error",
@@ -66,20 +66,7 @@ export const RegisterComponent = ({ eventId }: { eventId: string }) => {
     },
   });
 
-  useEffect(() => {
-    setLoading(true);
-    const fetchEvent = async () => {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      const event = events.find((event) => event.id === eventId);
-
-      setEvent(event || null);
-      setLoading(false);
-    };
-
-    fetchEvent();
-  }, []);
-
-  if (loading || !event) {
+  if (eventLoading || !event) {
     return (
       <Progress
         isIndeterminate
