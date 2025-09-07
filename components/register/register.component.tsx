@@ -92,14 +92,14 @@ export const RegisterComponent = ({ eventId }: { eventId: string }) => {
       </Breadcrumbs>
       {showForm ? (
         <>
-          <h1 className="text-2xl font-bold mt-4 ">Registro de Entradas</h1>
+          <h1 className="text-2xl font-bold mt-4 ">Registro de invitados</h1>
           <p className="text-lg text-default-400">
-            Completa tu registro a la lista de invitados.
+            Ingresa tus datos para lista de invitados.
           </p>
 
-          <div className="mt-4 flex items-center justify-center">
+          <div className="mt-16 flex items-center justify-center">
             <Form
-              className="flex flex-col space-y-4 mt-16"
+              className="flex flex-col space-y-4 "
               validationErrors={form.errors}
               onReset={() => form.resetForm()}
               onSubmit={form.handleSubmit}
