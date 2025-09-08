@@ -56,10 +56,10 @@ export const TableComponent = <T,>({
               />
               <div className="flex justify-between items-center">
                 <span className="text-default-400 text-small mt-2">
-                  Total {data.length} of {totalRows}
+                  Total {data.length} de {totalRows}
                 </span>
                 <label className="flex items-center text-default-400 text-small">
-                  Rows per page:
+                  Filas por página:
                   <select
                     className="bg-transparent outline-solid outline-transparent text-default-400 text-small"
                     value={rowsPerPage}

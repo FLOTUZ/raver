@@ -36,7 +36,7 @@ const RegisteredPage = () => {
 
   return (
     <div className="flex flex-col gap-4 mb-48 p-4">
-      <h1>Registros</h1>
+      <h1>Asistentes registrados</h1>
       <TableComponent
         columns={[
           { key: "id", label: "ID" },
