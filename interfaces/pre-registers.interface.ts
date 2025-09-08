@@ -8,8 +8,8 @@ export interface PreRegister {
   telephone: string;
   is_sended: boolean;
   event_id: string;
-  event: Event;
-  ticket: Ticket;
   created_at: Date;
   updated_at: Date;
+  event: Event;
+  ticket: Ticket;
 }

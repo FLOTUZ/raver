@@ -7,10 +7,11 @@ import { useQuery } from "@/hooks/useQuery";
 import { PaginatedResponse, PreRegister } from "@/interfaces";
 
 const RegisteredPage = () => {
-  const { data: registered, loading } = useQuery<
-    {},
-    PaginatedResponse<PreRegister>
-  >({
+  const {
+    data: registered,
+    loading,
+    refetch,
+  } = useQuery<{}, PaginatedResponse<PreRegister>>({
     url: "/api/register",
   });
 
@@ -38,15 +39,20 @@ const RegisteredPage = () => {
           { key: "email", label: "Correo" },
           { key: "telephone", label: "Telefono" },
           { key: "ticket", label: "Ticket" },
+          { key: "created_at", label: "Creado" },
+          { key: "updated_at", label: "Actualizado" },
         ]}
+        currentPage={registered.current_page}
         data={registered.rows.map((preRegister) => ({
           ...preRegister,
-          ticket: preRegister.ticket ? "Si" : "No",
+          ticket: preRegister.ticket !== null ? "Si" : "No",
+          created_at: new Date(preRegister.created_at).toLocaleString(),
+          updated_at: new Date(preRegister.updated_at).toLocaleString(),
         }))}
-        indexKey="id"
-        rowsPerPage={4}
+        indexKey={"id"}
+        totalPages={registered.pages}
         onPageChange={(page) => {
-          console.log(page);
+          refetch({ page });
         }}
       />
     </div>

@@ -8,33 +8,24 @@ import {
   TableRow,
   getKeyValue,
 } from "@heroui/react";
-import React from "react";
 
 interface TableComponentProps<T> {
   indexKey: keyof T;
-  data: T[];
+  data: any[];
   columns: { key: string; label: string }[];
-  rowsPerPage?: number;
-  onPageChange?: (page: number) => void;
+  totalPages: number;
+  currentPage: number;
+  onPageChange: (page: number) => void;
 }
 
 export const TableComponent = <T,>({
   indexKey: rowKey,
   columns,
   data,
-  rowsPerPage = 4,
+  totalPages,
+  currentPage,
   onPageChange,
 }: TableComponentProps<T>) => {
-  const [page, setPage] = React.useState(1);
-  const pages = Math.ceil(data.length / rowsPerPage);
-
-  const items = React.useMemo(() => {
-    const start = (page - 1) * rowsPerPage;
-    const end = start + rowsPerPage;
-
-    return data.slice(start, end);
-  }, [page, data, rowsPerPage]);
-
   return (
     <Table
       aria-label="Tabla parametrizable con paginación"
@@ -45,12 +36,9 @@ export const TableComponent = <T,>({
             showControls
             showShadow
             color="secondary"
-            page={page}
-            total={pages}
-            onChange={(page) => {
-              setPage(page);
-              onPageChange?.(page);
-            }}
+            page={currentPage}
+            total={totalPages}
+            onChange={onPageChange}
           />
         </div>
       }
@@ -61,8 +49,7 @@ export const TableComponent = <T,>({
       <TableHeader columns={columns}>
         {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
       </TableHeader>
-      <TableBody items={items}>
-        {/* Usamos 'item[rowKey] as string' para la clave */}
+      <TableBody items={data}>
         {(item) => (
           <TableRow key={item[rowKey] as string}>
             {(columnKey) => (
