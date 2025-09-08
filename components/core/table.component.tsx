@@ -1,5 +1,6 @@
 import {
   Pagination,
+  Spinner,
   Table,
   TableBody,
   TableCell,
@@ -13,6 +14,7 @@ interface TableComponentProps<T> {
   indexKey: keyof T;
   data: any[];
   columns: { key: string; label: string }[];
+  loadingState?: boolean;
   totalPages: number;
   totalRows: number;
   rowsPerPage: number;
@@ -24,10 +26,11 @@ interface TableComponentProps<T> {
 export const TableComponent = <T,>({
   indexKey: rowKey,
   columns,
+  loadingState,
   data,
   totalPages,
   totalRows,
-  rowsPerPage,
+  rowsPerPage = 10,
   currentPage,
   onPageChange,
   onRowsPerPageChange,
@@ -52,20 +55,19 @@ export const TableComponent = <T,>({
                 onChange={onPageChange}
               />
               <div className="flex justify-between items-center">
-                <span className="text-default-400 text-small">
+                <span className="text-default-400 text-small mt-2">
                   Total {data.length} of {totalRows}
                 </span>
                 <label className="flex items-center text-default-400 text-small">
                   Rows per page:
                   <select
                     className="bg-transparent outline-solid outline-transparent text-default-400 text-small"
-                    defaultValue={rowsPerPage}
                     value={rowsPerPage}
                     onChange={onRowsPerPageChange}
                   >
-                    <option value="5">5</option>
                     <option value="10">10</option>
                     <option value="15">15</option>
+                    <option value="20">20</option>
                   </select>
                 </label>
               </div>
@@ -78,7 +80,12 @@ export const TableComponent = <T,>({
             <TableColumn key={column.key}>{column.label}</TableColumn>
           )}
         </TableHeader>
-        <TableBody items={data}>
+        <TableBody
+          emptyContent={"No hay datos"}
+          items={data}
+          loadingContent={<Spinner />}
+          loadingState={loadingState ? "loading" : "idle"}
+        >
           {(item) => (
             <TableRow key={item[rowKey] as string}>
               {(columnKey) => (

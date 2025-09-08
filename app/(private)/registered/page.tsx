@@ -1,18 +1,22 @@
 "use client";
 
 import { Progress } from "@heroui/react";
+import { useState } from "react";
 
 import { TableComponent } from "@/components/core";
 import { useQuery } from "@/hooks/useQuery";
 import { PaginatedQuery, PaginatedResponse, PreRegister } from "@/interfaces";
 
 const RegisteredPage = () => {
+  const [rowsPerPage, setRowsPerPage] = useState<number>(10);
   const {
     data: registered,
     loading,
+    isFetchingMore,
     refetch,
   } = useQuery<PaginatedQuery, PaginatedResponse<PreRegister>>({
     url: "/api/register",
+    keepData: true,
   });
 
   if (loading) {
@@ -26,7 +30,7 @@ const RegisteredPage = () => {
     );
   }
 
-  if (!registered) {
+  if (registered == null) {
     return <div>No hay registros</div>;
   }
 
@@ -51,17 +55,19 @@ const RegisteredPage = () => {
           updated_at: new Date(preRegister.updated_at).toLocaleString(),
         }))}
         indexKey={"id"}
+        loadingState={isFetchingMore}
         rowsPerPage={registered.rows_per_page}
         totalPages={registered.pages}
         totalRows={registered.total_rows}
         onPageChange={(page) => {
-          refetch({ page });
+          refetch({ page, rows_per_page: rowsPerPage });
         }}
         onRowsPerPageChange={(event) => {
           refetch({
             page: registered.current_page,
-            rows_per_page: Number(event.target.value),
+            rows_per_page: parseInt(event.target.value, 10),
           });
+          setRowsPerPage(parseInt(event.target.value, 10));
         }}
       />
     </div>
