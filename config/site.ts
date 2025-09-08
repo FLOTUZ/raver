@@ -25,11 +25,6 @@ export const siteConfig = {
       label: "Blog",
       href: "/blog",
     },
-
-    {
-      label: "Logout",
-      href: "/logout",
-    },
   ],
   drawerItems: [
     {
