@@ -12,7 +12,7 @@ export async function POST(req: Request) {
   if (!user)
     return NextResponse.json(
       { error: "Usuario no encontrado" },
-      { status: 404 },
+      { status: 404 }
     );
 
   const isValid = await bcrypt.compare(password, user.password);
@@ -20,11 +20,11 @@ export async function POST(req: Request) {
   if (!isValid)
     return NextResponse.json(
       { error: "Credenciales incorrectas" },
-      { status: 401 },
+      { status: 401 }
     );
 
   const token = signJwt({
-    payload: { userId: user.id, email, name: user.name },
+    payload: { userId: user.id, email, name: user.name, hostId: user.host_id },
   });
 
   return NextResponse.json({ token, user });
