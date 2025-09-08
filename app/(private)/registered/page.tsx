@@ -42,6 +42,9 @@ const RegisteredPage = () => {
         }))}
         indexKey="id"
         rowsPerPage={4}
+        onPageChange={(page) => {
+          console.log(page);
+        }}
       />
     </div>
   );
