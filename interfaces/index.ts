@@ -1,6 +1,7 @@
 export * from "./checker.interface";
 export * from "./event.interface";
 export * from "./host.interface";
+export * from "./paginated-query.interface";
 export * from "./paginated-response.interface";
 export * from "./pre-registers.interface";
 export * from "./session-payload.interface";

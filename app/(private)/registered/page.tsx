@@ -4,14 +4,14 @@ import { Progress } from "@heroui/react";
 
 import { TableComponent } from "@/components/core";
 import { useQuery } from "@/hooks/useQuery";
-import { PaginatedResponse, PreRegister } from "@/interfaces";
+import { PaginatedQuery, PaginatedResponse, PreRegister } from "@/interfaces";
 
 const RegisteredPage = () => {
   const {
     data: registered,
     loading,
     refetch,
-  } = useQuery<{}, PaginatedResponse<PreRegister>>({
+  } = useQuery<PaginatedQuery, PaginatedResponse<PreRegister>>({
     url: "/api/register",
   });
 
@@ -35,6 +35,7 @@ const RegisteredPage = () => {
       <h1>Registros</h1>
       <TableComponent
         columns={[
+          { key: "id", label: "ID" },
           { key: "name", label: "Nombre" },
           { key: "email", label: "Correo" },
           { key: "telephone", label: "Telefono" },
@@ -50,9 +51,17 @@ const RegisteredPage = () => {
           updated_at: new Date(preRegister.updated_at).toLocaleString(),
         }))}
         indexKey={"id"}
+        rowsPerPage={registered.rows_per_page}
         totalPages={registered.pages}
+        totalRows={registered.total_rows}
         onPageChange={(page) => {
           refetch({ page });
+        }}
+        onRowsPerPageChange={(event) => {
+          refetch({
+            page: registered.current_page,
+            rows_per_page: Number(event.target.value),
+          });
         }}
       />
     </div>
