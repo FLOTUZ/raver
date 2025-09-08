@@ -12,6 +12,9 @@ export const HomeComponent = () => {
 
   const { data: events, loading } = useQuery<{}, Event[]>({
     url: "/api/events",
+    onError(error) {
+      console.log(error);
+    },
   });
 
   if (loading) {
