@@ -46,7 +46,7 @@ export const AuthAdminProvider = ({ children }: { children: ReactNode }) => {
 
         setAdmin(response.data.user);
         localStorage.setItem("admin", JSON.stringify(data.user));
-        localStorage.setItem("token", JSON.stringify(data.token));
+        localStorage.setItem("token", data.token);
         setLoading(false);
       }
     } catch (error: AxiosError | any) {
