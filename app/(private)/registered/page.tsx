@@ -4,10 +4,13 @@ import { Progress } from "@heroui/react";
 
 import { TableComponent } from "@/components/core";
 import { useQuery } from "@/hooks/useQuery";
-import { PreRegister } from "@/interfaces";
+import { PaginatedResponse, PreRegister } from "@/interfaces";
 
 const RegisteredPage = () => {
-  const { data: registered, loading } = useQuery<{}, PreRegister[]>({
+  const { data: registered, loading } = useQuery<
+    {},
+    PaginatedResponse<PreRegister>
+  >({
     url: "/api/register",
   });
 
@@ -36,7 +39,7 @@ const RegisteredPage = () => {
           { key: "telephone", label: "Telefono" },
           { key: "ticket", label: "Ticket" },
         ]}
-        data={registered.map((preRegister) => ({
+        data={registered.rows.map((preRegister) => ({
           ...preRegister,
           ticket: preRegister.ticket ? "Si" : "No",
         }))}

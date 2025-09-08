@@ -41,6 +41,6 @@ export async function paginate<T>({
     prev_page: page > 1 ? page - 1 : null,
     total_rows: totalRows,
     rows_per_page: rows_per_page,
-    data: data,
+    rows: data,
   } as PaginatedResponse<T>;
 }

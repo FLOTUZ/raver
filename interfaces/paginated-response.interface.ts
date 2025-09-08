@@ -5,5 +5,5 @@ export interface PaginatedResponse<T> {
   prev_page: number | null;
   total_rows: number;
   rows_per_page: number;
-  data: T[];
+  rows: T[];
 }
