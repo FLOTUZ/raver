@@ -40,3 +40,4 @@ package-lock.json
 bun.lockb
 /lib/generated/prisma
 deploy-ravr-tickets.zip
+.env

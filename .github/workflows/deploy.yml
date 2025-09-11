@@ -1,36 +1,51 @@
-name: Deploy to Dokploy
+name: Deploy Next.js to EC2
 
 on:
   push:
     branches:
-      - main # o la rama que uses para producción
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: "20"
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
-      - name: Run deploy script (build + zip)
-        run: |
-          chmod +x ./deploy.sh
-          ./deploy.sh
+      - name: Build Next.js
+        run: npm run build && rm -rf .next/cache
 
-      - name: Upload to Dokploy
-        run: |
-          curl -X POST "$DOKPLOY_URL/api/deploy" \
-            -H "Authorization: Bearer $DOKPLOY_API_KEY" \
-            -F "file=@deploy-*.zip"
+      - name: Run Prisma Migrations
         env:
-          DOKPLOY_URL: ${{ secrets.DOKPLOY_URL }}
-          DOKPLOY_API_KEY: ${{ secrets.DOKPLOY_API_KEY }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: npx prisma migrate deploy
+
+      - name: Copy files to EC2
+        uses: appleboy/scp-action@v1
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+          source: ".next package.json package-lock.json prisma .env"
+          target: "/home/ubuntu/app"
+
+      - name: SSH and restart app
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            cd /home/ubuntu/app
+            npm install --production
+            pm2 stop app || true
+            pm2 start npm --name "app" -- start
