@@ -11,7 +11,8 @@
     "prisma:reset": "prisma migrate reset",
     "prisma:deploy": "prisma migrate deploy",
     "prisma:seed": "tsx prisma/seed.ts",
-    "prisma:studio": "prisma studio"
+    "prisma:studio": "prisma studio",
+    "deploy": "bash ./deploy.sh || sh ./deploy.sh"
   },
   "dependencies": {
     "@heroui/button": "2.2.24",
@@ -72,6 +73,7 @@
     "@types/react-dom": "18.3.0",
     "@typescript-eslint/eslint-plugin": "8.34.1",
     "@typescript-eslint/parser": "8.34.1",
+    "bestzip": "^2.2.1",
     "eslint-config-next": "15.3.4",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-import": "2.31.0",

@@ -5,7 +5,7 @@ import { protectedRoute } from "@/lib";
 import { prisma } from "@/prisma";
 import { paginate } from "@/utils";
 
-async function getSelledTickets(req: Request, payload: SessionPayload) {
+async function getSelledTickets(req: Request, _: SessionPayload) {
   const url = new URL(req.url);
   const searchParams = url.searchParams;
 

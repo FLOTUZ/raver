@@ -1,0 +1,28 @@
+FROM node:20-alpine
+
+# Configuramos la zona horaria
+RUN apk add --no-cache tzdata
+ENV TZ=America/Mexico_City
+
+WORKDIR /app
+
+# Copiamos solo lo necesario para instalar dependencias y correr la app
+COPY package.json package-lock.json prisma ./
+COPY .next ./
+COPY public ./public
+COPY next.config.js ./
+
+# Aseguramos entorno de producción
+ENV NODE_ENV=production
+
+# Instalamos dependencias (solo prod)
+RUN npm ci --omit=dev
+
+# Generamos el cliente de Prisma
+RUN npx prisma generate
+
+# Exponemos el puerto que usará NextJS
+EXPOSE 3001
+
+# Al arrancar: aplicar migraciones y luego iniciar la app
+CMD npx prisma migrate deploy && npm start
