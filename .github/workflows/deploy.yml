@@ -1,0 +1,36 @@
+name: Deploy to Dokploy
+
+on:
+  push:
+    branches:
+      - main # o la rama que uses para producción
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run deploy script (build + zip)
+        run: |
+          chmod +x ./deploy.sh
+          ./deploy.sh
+
+      - name: Upload to Dokploy
+        run: |
+          curl -X POST "$DOKPLOY_URL/api/deploy" \
+            -H "Authorization: Bearer $DOKPLOY_API_KEY" \
+            -F "file=@deploy-*.zip"
+        env:
+          DOKPLOY_URL: ${{ secrets.DOKPLOY_URL }}
+          DOKPLOY_API_KEY: ${{ secrets.DOKPLOY_API_KEY }}

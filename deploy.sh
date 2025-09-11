@@ -21,6 +21,7 @@ npx bestzip $OUTPUT \
   package-lock.json \
   prisma \
   public \
-  next.config.js
+  next.config.js \
+  Dockerfile
 
 echo "✅ Paquete creado: $OUTPUT"
