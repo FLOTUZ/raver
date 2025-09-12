@@ -9,7 +9,7 @@
     "lint": "eslint --fix",
     "prisma:migrate": "prisma migrate dev",
     "prisma:reset": "prisma migrate reset",
-    "prisma:deploy": "prisma migrate deploy",
+    "postinstall": "prisma migrate deploy",
     "prisma:seed": "tsx prisma/seed.ts",
     "prisma:studio": "prisma studio",
     "deploy": "bash ./deploy.sh || sh ./deploy.sh"
