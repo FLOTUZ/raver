@@ -72,7 +72,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
-          source: ".next/ public/ package.json package-lock.json prisma/ next.config.js"
+          source: ".next/,public/,package.json,package-lock.json,prisma/,next.config.js"
           target: "/home/ubuntu/app"
 
       # 11. Conectarse a EC2 y reiniciar la app con PM2
