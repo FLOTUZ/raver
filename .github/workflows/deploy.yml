@@ -51,17 +51,21 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: npx prisma migrate deploy
 
-      # 7. Copiar archivos a EC2
+      # 7. Listar archivos generados
+      - name: List build files
+        run: ls -R
+
+      # 8. Copiar archivos a EC2
       - name: Copy files to EC2
         uses: appleboy/scp-action@v1
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
-          source: ".next out package.json package-lock.json prisma .env"
+          source: ".next package.json package-lock.json prisma"
           target: "/home/ubuntu/app"
 
-      # 8. Conectarse a EC2 y reiniciar app
+      # 9. Conectarse a EC2 y reiniciar app
       - name: SSH and restart app
         uses: appleboy/ssh-action@v1
         with:
