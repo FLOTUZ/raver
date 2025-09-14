@@ -17,6 +17,20 @@ export async function POST(
       include: { host: true },
     });
 
+    const emailAlreadyRegistered = await prisma.preRegister.findFirst({
+      where: { email, event_id: event.id },
+    });
+
+    if (emailAlreadyRegistered) {
+      return new Response(
+        JSON.stringify({
+          method: request.method,
+          message: "El correo ya está registrado para este evento",
+        }),
+        { status: 400 }
+      );
+    }
+
     const { id: preRegisterId } = await prisma.preRegister.create({
       data: {
         name,
