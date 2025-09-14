@@ -8,7 +8,7 @@ import {
   Input,
   Progress,
 } from "@heroui/react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useFormik } from "formik";
 import { useState } from "react";
 
@@ -55,13 +55,21 @@ export const RegisterComponent = ({ eventId }: { eventId: string }) => {
           });
         }
       } catch (error) {
-        console.log(error);
-        addToast({
-          title: "Error",
-          description: "Hubo un error al enviar la entrada",
-          variant: "solid",
-          color: "danger",
-        });
+        if (error instanceof AxiosError && !error.response) {
+          addToast({
+            title: "Hubo un error al enviar la entrada",
+            description: error!.response!.data.message,
+            variant: "solid",
+            color: "danger",
+          });
+        } else {
+          addToast({
+            title: "Hubo un error al enviar la entrada",
+            description: "Intenta de nuevo más tarde",
+            variant: "solid",
+            color: "danger",
+          });
+        }
       }
       setSendingTicket(false);
     },
