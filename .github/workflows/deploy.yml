@@ -46,6 +46,7 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           script: |
             cd /home/ubuntu/app
-            npm install --production
+            npm ci --omit=dev
             pm2 stop app || true
             pm2 start npm --name "app" -- start
+            pm2 save
