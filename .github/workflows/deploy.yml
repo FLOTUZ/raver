@@ -63,7 +63,7 @@ jobs:
 
       # 9. Listar archivos para deploy (sin .next)
       - name: List files for deploy
-        run: tree -L 2
+        run: tree -L 1 -a
 
       # 10. Copiar archivos a EC2
       - name: Copy files to EC2
