@@ -32,9 +32,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      # 4. Instalar dependencias sin ejecutar postinstall
+      # 4. Instalar dependencias sin ejecutar postinstall y generar Prisma Client
       - name: Install dependencies
         run: npm install --ignore-scripts
+
+      - name: Generate Prisma Client
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: npx prisma generate
 
       # 5. Build limpio de Next.js
       - name: Clean and Build Next.js
