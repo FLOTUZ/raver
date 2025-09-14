@@ -26,9 +26,9 @@ jobs:
         run: npm run build && rm -rf .next/cache
 
       - name: Run Prisma Migrations
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        run: npx prisma migrate deploy
+        run: |
+          export DATABASE_URL=${{ secrets.DATABASE_URL }}
+          npx prisma migrate deploy
 
       - name: Copy files to EC2
         uses: appleboy/scp-action@v1
