@@ -21,7 +21,7 @@ jobs:
         with:
           node-version: "20"
 
-      # 3. Cachear dependencias
+      # 3. Cachear dependencias de Node.js
       - name: Cache Node.js modules
         uses: actions/cache@v3
         with:
@@ -32,30 +32,40 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      # 4. Instalar dependencias sin ejecutar postinstall y generar Prisma Client
+      # 4. Instalar dependencias sin ejecutar postinstall
       - name: Install dependencies
         run: npm install --ignore-scripts
 
+      # 5. Generar Prisma Client
       - name: Generate Prisma Client
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: npx prisma generate
 
-      # 5. Build limpio de Next.js
+      # 6. Cache de Next.js (opcional para builds más rápidos)
+      - name: Cache Next.js build
+        uses: actions/cache@v3
+        with:
+          path: .next/cache
+          key: nextjs-${{ github.sha }}
+          restore-keys: |
+            nextjs-
+
+      # 7. Build limpio de Next.js
       - name: Clean and Build Next.js
         run: rm -rf .next && npm run build
 
-      # 6. Ejecutar migraciones de Prisma con DATABASE_URL
+      # 8. Ejecutar migraciones de Prisma
       - name: Run Prisma Migrations
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: npx prisma migrate deploy
 
-      # 7. Listar archivos generados
-      - name: List build files
-        run: ls -R
+      # 9. Listar archivos para deploy (sin .next)
+      - name: List files for deploy
+        run: tree -L 2
 
-      # 8. Copiar archivos a EC2
+      # 10. Copiar archivos a EC2
       - name: Copy files to EC2
         uses: appleboy/scp-action@v1
         with:
@@ -65,7 +75,7 @@ jobs:
           source: ".next package.json package-lock.json prisma"
           target: "/home/ubuntu/app"
 
-      # 9. Conectarse a EC2 y reiniciar app
+      # 11. Conectarse a EC2 y reiniciar la app con PM2
       - name: SSH and restart app
         uses: appleboy/ssh-action@v1
         with:
