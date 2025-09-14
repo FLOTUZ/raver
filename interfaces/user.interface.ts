@@ -1,4 +1,4 @@
-import { $Enums } from "@prisma/client";
+import { Role } from "@prisma/client";
 
 import { Checker, Host } from "@/interfaces";
 export interface User {
@@ -6,7 +6,7 @@ export interface User {
   email: string;
   name: string;
   password: string;
-  role: $Enums.Role;
+  role: Role;
   host: Host;
   host_id: string;
   checkers: Checker[];
