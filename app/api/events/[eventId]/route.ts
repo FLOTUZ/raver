@@ -19,7 +19,7 @@ export async function GET(
   return NextResponse.json(event);
 }
 
-export async function updateEvent(
+async function updateEvent(
   request: Request,
   context: { params: Promise<{ eventId: string }> }
 ) {
