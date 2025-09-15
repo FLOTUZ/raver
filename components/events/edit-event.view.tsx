@@ -6,6 +6,7 @@ import { useFormik } from "formik";
 
 import { useQuery } from "@/hooks/useQuery";
 import { Event } from "@/interfaces";
+import axios from "axios";
 
 export const EditEventView = ({ eventId }: { eventId: string }) => {
   const { data: event, loading: eventLoading } = useQuery<{}, Event>({
@@ -23,8 +24,27 @@ export const EditEventView = ({ eventId }: { eventId: string }) => {
       init_date: event?.init_date || "",
       end_date: event?.end_date || "",
     },
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       console.log(values);
+      const start_time = new Date(values.init_date).toLocaleTimeString(
+        "es-AR",
+        {
+          hour: "2-digit",
+          minute: "2-digit",
+        }
+      );
+      const end_time = new Date(values.end_date).toLocaleTimeString("es-AR", {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+
+      console.log({ ...values, start_time, end_time });
+
+      await axios.patch(`/api/events/${eventId}`, {
+        ...values,
+        start_time,
+        end_time,
+      });
     },
   });
 
@@ -81,6 +101,19 @@ export const EditEventView = ({ eventId }: { eventId: string }) => {
             label={"Fecha de finalización del evento"}
             labelPlacement="outside"
             name="init_date"
+            validate={(value) => {
+              if (!value) {
+                return "La fecha de inicio es requerida";
+              }
+              if (form.values.end_date && value) {
+                const start_time = new Date(value.toString()).getTime();
+                const end_time = new Date(form.values.end_date).getTime();
+
+                if (start_time > end_time) {
+                  return "La fecha de inicio no puede ser posterior a la de finalización";
+                }
+              }
+            }}
             value={
               form.values.init_date === ""
                 ? undefined
@@ -102,6 +135,16 @@ export const EditEventView = ({ eventId }: { eventId: string }) => {
             label={"Fecha de finalización del evento"}
             labelPlacement="outside"
             name="init_date"
+            validate={(value) => {
+              if (form.values.init_date && value) {
+                const start_time = new Date(form.values.init_date).getTime();
+                const end_time = new Date(value.toString()).getTime();
+
+                if (end_time < start_time) {
+                  return "La fecha de finalización no puede ser anterior a la de inicio";
+                }
+              }
+            }}
             value={
               form.values.end_date === ""
                 ? undefined
