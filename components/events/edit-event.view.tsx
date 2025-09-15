@@ -9,8 +9,11 @@ export const EditEventView = () => {
     initialValues: {
       title: "",
       description: "",
-      date: "",
+      image: "",
+      banner: "",
       location: "",
+      init_date: "",
+      end_date: "",
     },
     onSubmit: (values) => {
       console.log(values);
