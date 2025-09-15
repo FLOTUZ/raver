@@ -55,7 +55,7 @@ export const ShowEventView = ({ eventId }: { eventId: string }) => {
       {/* Event details */}
       <div className="w-full flex justify-center mt-6 mb-16">
         <div className="w-full max-w-3xl text-start">
-          <h1 className="text-3xl font-bold self-center">{event?.name}</h1>
+          <h1 className="text-3xl font-bold text-center">{event?.name}</h1>
 
           <br />
           <div className="bg-black text-white p-4 rounded-xl max-w-3xl mx-auto prose prose-lg prose-p:text-white prose-headings:text-orange-400 prose-strong:text-yellow-300 prose-a:text-indigo-400 hover:prose-a:text-indigo-200">
