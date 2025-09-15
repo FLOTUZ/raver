@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 
+import { protectedRoute } from "@/lib";
 import { prisma } from "@/prisma";
 
 export async function GET(
@@ -18,7 +19,7 @@ export async function GET(
   return NextResponse.json(event);
 }
 
-export async function PATCH(
+export async function updateEvent(
   request: Request,
   context: { params: Promise<{ eventId: string }> }
 ) {
@@ -39,3 +40,7 @@ export async function PATCH(
 
   return NextResponse.json(updatedEvent);
 }
+
+export const { PUT } = protectedRoute({
+  PUT: updateEvent,
+});

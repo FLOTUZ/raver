@@ -2,11 +2,11 @@
 
 import { Button, DateInput, Input, Progress, Textarea } from "@heroui/react";
 import { parseAbsoluteToLocal } from "@internationalized/date";
+import axios from "axios";
 import { useFormik } from "formik";
 
 import { useQuery } from "@/hooks/useQuery";
 import { Event } from "@/interfaces";
-import axios from "axios";
 
 export const EditEventView = ({ eventId }: { eventId: string }) => {
   const { data: event, loading: eventLoading } = useQuery<{}, Event>({
@@ -38,9 +38,7 @@ export const EditEventView = ({ eventId }: { eventId: string }) => {
         minute: "2-digit",
       });
 
-      console.log({ ...values, start_time, end_time });
-
-      await axios.patch(`/api/events/${eventId}`, {
+      await axios.put(`/api/events/${eventId}`, {
         ...values,
         start_time,
         end_time,
