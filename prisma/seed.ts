@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 async function main() {
   const host = await prisma.host.create({
     data: {
-      name: "mani.codes",
+      name: "michi.fiestas",
     },
   });
 
@@ -46,31 +46,39 @@ async function main() {
     data: {
       name: "🎃 Noche de Disfraces 2025 👻",
       description: `
-¡La espera terminó! Celebremos la noche con nuestra gran **fiesta de disfraces de Halloween 2025** que no olvidarás.  
+# 🎃👻 ¡La Fiesta de Disfraces ya está aquí! 👻🎃
 
-Prepárate para una noche llena de misterio, diversión y sorpresas, donde la creatividad y la magia se apoderarán del ambiente.  
+- 📅 **Sábado 25 de octubre**  
+- 📍 **Calle Nazareth #38, Col. Ampliación Valle del Real**  
+- 🕕 **6:00 pm – 12:30 am**  
+- 💸 **Cover: $120**  
 
-✨ Habrá premios para los mejores disfraces, música, y muchas experiencias aterradoras (pero divertidas).  
+---
 
-Ven con tu mejor disfraz y sé parte del inicio de esta nueva etapa.  
-La noche será tuya… si te atreves. 🕷️🦇  
+### ✨ Actividades
+- Concurso de disfraces con premios  
+- Actividades recreativas y sociales  
+- Shots de cortesía  
+- Música y ambiente garantizado  
 
-📍 **Lugar:** Calle 123, Ciudad, País  
-📅 **Fecha:** 1 de enero de 2023  
-🕙 **Hora:** 10:00 AM – 12:00 PM 
+---
+
+⚠ **Disfraz obligatorio**
+
+👉 Haz tu registro para confirmar tu asistencia y ayudarnos a organizar una noche épica
+
+---
+
+🕷 **¡No faltes, será una fiesta de miedo!**
     `,
       host_id: host.id,
-      image:
-        "https://i.pinimg.com/736x/70/18/12/701812553630321ca103c55afc93c172.jpg",
-      banner:
-        "https://i.pinimg.com/736x/ab/e6/34/abe634457a1419ef24dd7443a2ffdb21.jpg",
-      init_date: new Date("2023-01-01T00:00:00.000Z"),
-      end_date: new Date("2023-01-01T12:00:00.000Z"),
-      location: "Calle 123, Ciudad, País",
-      start_time: "10:00",
-      end_time: "12:00",
-      created_at: new Date("2023-01-01T00:00:00.000Z"),
-      updated_at: new Date("2023-01-01T00:00:00.000Z"),
+      image: "/fiesta-de-disfraces.jpeg",
+      banner: "/fiesta-de-disfraces.jpeg",
+      init_date: new Date("2025-10-25T18:00:00.000Z"),
+      end_date: new Date("2025-10-26T00:30:00.000Z"),
+      location: "Calle Nazareth #38, Col. Ampliación Valle del Real",
+      start_time: "18:00",
+      end_time: "00:30",
     },
   });
 
