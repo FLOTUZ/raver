@@ -72,8 +72,10 @@ async function main() {
 🕷 **¡No faltes, será una fiesta de miedo!**
     `,
       host_id: host.id,
-      image: "/fiesta-de-disfraces.jpeg",
-      banner: "/fiesta-de-disfraces.jpeg",
+      image:
+        "https://manicodes-public.s3.us-east-2.amazonaws.com/fiesta-de-disfrases.jpeg",
+      banner:
+        "https://manicodes-public.s3.us-east-2.amazonaws.com/fiesta-de-disfrases.jpeg",
       init_date: new Date("2025-10-25T18:00:00.000Z"),
       end_date: new Date("2025-10-26T00:30:00.000Z"),
       location: "Calle Nazareth #38, Col. Ampliación Valle del Real",
