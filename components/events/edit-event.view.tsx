@@ -16,19 +16,19 @@ export const EditEventView = ({ eventId }: { eventId: string }) => {
     enableReinitialize: true,
     initialValues: {
       name: event?.name || "",
-      description: "",
-      image: "",
-      banner: "",
-      location: "",
-      init_date: "",
-      end_date: "",
+      description: event?.description || "",
+      image: event?.image || "",
+      banner: event?.banner || "",
+      location: event?.location || "",
+      init_date: event?.init_date || "",
+      end_date: event?.end_date || "",
     },
     onSubmit: (values) => {
       console.log(values);
     },
   });
 
-  if (eventLoading && event === null) {
+  if (eventLoading) {
     return (
       <Progress
         isIndeterminate
@@ -39,7 +39,7 @@ export const EditEventView = ({ eventId }: { eventId: string }) => {
     );
   }
 
-  if (!event || event === null) {
+  if (!event) {
     return <div>Event not found</div>;
   }
 
@@ -68,7 +68,6 @@ export const EditEventView = ({ eventId }: { eventId: string }) => {
           />
 
           <Input
-            isRequired
             label="Banner URL"
             labelPlacement="outside"
             name="banner"
@@ -78,6 +77,7 @@ export const EditEventView = ({ eventId }: { eventId: string }) => {
           />
 
           <DateInput
+            isRequired
             label={"Fecha de finalización del evento"}
             labelPlacement="outside"
             name="init_date"
@@ -132,16 +132,18 @@ export const EditEventView = ({ eventId }: { eventId: string }) => {
           <Textarea
             isClearable
             label="Description"
-            minRows={10}
+            minRows={20}
             name="description"
             placeholder="Description"
             value={form.values.description}
             variant="bordered"
-            onChange={(value) => form.setFieldValue("description", value)}
+            onChange={(e) => form.setFieldValue("description", e.target.value)}
             onClear={() => form.setFieldValue("description", "")}
           />
 
-          <Button color="primary">Button</Button>
+          <Button color="primary" type="submit">
+            Button
+          </Button>
         </div>
       </form>
     </div>
