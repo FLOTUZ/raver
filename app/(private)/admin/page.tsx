@@ -1,6 +1,7 @@
 "use client";
 
-import { Progress } from "@heroui/react";
+import { Button, Progress } from "@heroui/react";
+import { IoMdLogOut } from "react-icons/io";
 
 import {
   CheckersEarningsList,
@@ -9,8 +10,10 @@ import {
 } from "@/components/admin";
 import { useQuery } from "@/hooks/useQuery";
 import { Checker } from "@/interfaces";
+import { useAdminAuth } from "@/providers";
 
 const AdminPage = () => {
+  const { logout } = useAdminAuth();
   const { data: sellledTickets, loading: loadingSelledTickets } = useQuery<
     {},
     StatCardData | null
@@ -35,6 +38,15 @@ const AdminPage = () => {
 
   return (
     <div className="flex flex-col gap-4 m-4">
+      <Button
+        isIconOnly
+        className="self-end"
+        color="danger"
+        variant="solid"
+        onPress={logout}
+      >
+        <IoMdLogOut />
+      </Button>
       <StatCard saleStats={sellledTickets} />
       <CheckersEarningsList checkers={checkers || []} />
     </div>

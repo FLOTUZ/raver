@@ -1,6 +1,5 @@
 // components/BottomNavBar.tsx
 "use client";
-
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FaQrcode } from "react-icons/fa";
@@ -21,7 +20,7 @@ export const BottomNavBarComponent = () => {
         ${scrollingDown ? "transform translate-y-100" : "transform translate-y-0"} 
         ${scrollingDown ? "mb-0" : "mb-16"}`}
     >
-      <div className="flex justify-around h-16 items-center max-w-lg mx-auto px-4">
+      <div className="flex justify-between h-16 items-center max-w-lg mx-auto px-4">
         {/* Enlaces de la izquierda */}
         <div className="flex flex-1 justify-around">
           <Link
