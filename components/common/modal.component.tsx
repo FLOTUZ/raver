@@ -21,7 +21,7 @@ export const ModalComponent = ({
   footer,
 }: ModalComponentProps) => {
   return (
-    <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+    <Modal isOpen={isOpen} size="5xl" onOpenChange={onOpenChange}>
       <ModalContent>
         <>
           <ModalHeader className="flex flex-col gap-1">{header}</ModalHeader>

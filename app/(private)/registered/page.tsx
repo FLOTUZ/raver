@@ -9,7 +9,17 @@ import { useQuery } from "@/hooks/useQuery";
 import { PaginatedQuery, PaginatedResponse, PreRegister } from "@/interfaces";
 
 const RegisteredPage = () => {
-  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure({
+    onChange(isOpen) {
+      if (!isOpen) {
+        setSelectedRegister(null);
+      }
+    },
+  });
+
+  const [selectedRegister, setSelectedRegister] = useState<PreRegister | null>(
+    null
+  );
 
   const [rowsPerPage, setRowsPerPage] = useState<number>(10);
   const {
@@ -41,7 +51,7 @@ const RegisteredPage = () => {
     <>
       <div className="flex flex-col gap-4 mb-48 p-4">
         <h1 className="text-2xl font-bold">Asistentes registrados</h1>
-        <TableComponent
+        <TableComponent<PreRegister>
           columns={[
             { key: "id", label: "ID" },
             { key: "name", label: "Nombre" },
@@ -68,6 +78,7 @@ const RegisteredPage = () => {
           }}
           onRowClick={(row) => {
             onOpen();
+            setSelectedRegister(row);
           }}
           onRowsPerPageChange={(event) => {
             refetch({
@@ -82,13 +93,13 @@ const RegisteredPage = () => {
         />
       </div>
       <ModalComponent
-        body={<div>Cobrar</div>}
+        body={<div>{JSON.stringify(selectedRegister, null, 2)}</div>}
         footer={
           <Button color="danger" variant="light" onPress={onClose}>
             Cerrar
           </Button>
         }
-        header="Acciones"
+        header={<h3>Detalles del asistente</h3>}
         isOpen={isOpen}
         onOpenChange={onOpenChange}
       />
