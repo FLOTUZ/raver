@@ -1,4 +1,5 @@
 import {
+  Input,
   Pagination,
   Spinner,
   Table,
@@ -13,6 +14,8 @@ import {
 interface TableComponentProps<T> {
   indexKey: keyof T;
   data: any[];
+  onSearch?: (value: string) => void;
+  onRowClick?: (row: T) => void;
   columns: { key: string; label: string }[];
   loadingState?: boolean;
   totalPages: number;
@@ -28,6 +31,8 @@ export const TableComponent = <T,>({
   columns,
   loadingState,
   data,
+  onSearch,
+  onRowClick,
   totalPages,
   totalRows,
   rowsPerPage = 10,
@@ -39,10 +44,7 @@ export const TableComponent = <T,>({
     <div>
       <Table
         aria-label="Tabla parametrizable con paginación"
-        classNames={{
-          wrapper: "min-h-[222px]",
-        }}
-        topContent={
+        bottomContent={
           totalPages > 0 && (
             <div className="flex w-full justify-center flex-col">
               <Pagination
@@ -74,6 +76,18 @@ export const TableComponent = <T,>({
             </div>
           )
         }
+        classNames={{
+          wrapper: "min-h-[222px]",
+        }}
+        topContent={
+          onSearch && (
+            <Input
+              className="w-full"
+              placeholder="Buscar..."
+              onValueChange={(value) => onSearch(value)}
+            />
+          )
+        }
       >
         <TableHeader columns={columns}>
           {(column) => (
@@ -87,7 +101,11 @@ export const TableComponent = <T,>({
           loadingState={loadingState ? "loading" : "idle"}
         >
           {(item) => (
-            <TableRow key={item[rowKey] as string}>
+            <TableRow
+              key={item[rowKey] as string}
+              className="cursor-pointer"
+              onClick={() => (onRowClick ? onRowClick(item) : undefined)}
+            >
               {(columnKey) => (
                 <TableCell>{getKeyValue(item, columnKey)}</TableCell>
               )}

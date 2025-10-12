@@ -36,7 +36,7 @@ const RegisteredPage = () => {
 
   return (
     <div className="flex flex-col gap-4 mb-48 p-4">
-      <h1>Asistentes registrados</h1>
+      <h1 className="text-2xl font-bold">Asistentes registrados</h1>
       <TableComponent
         columns={[
           { key: "id", label: "ID" },
@@ -62,12 +62,18 @@ const RegisteredPage = () => {
         onPageChange={(page) => {
           refetch({ page, rows_per_page: rowsPerPage });
         }}
+        onRowClick={(row) => {
+          console.log(row);
+        }}
         onRowsPerPageChange={(event) => {
           refetch({
             page: registered.current_page,
             rows_per_page: parseInt(event.target.value, 10),
           });
           setRowsPerPage(parseInt(event.target.value, 10));
+        }}
+        onSearch={(value) => {
+          refetch({ page: 1, rows_per_page: rowsPerPage, search: value });
         }}
       />
     </div>
