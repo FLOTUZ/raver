@@ -10,7 +10,7 @@ import { Checker } from "@/interfaces";
 const NewCheckerPage = () => {
   const router = useRouter();
 
-  const { mutate: CREATE_CHECKER } = useMutation<
+  const { mutate: CREATE_CHECKER, loading } = useMutation<
     { email: string; name: string },
     { checker: Checker }
   >({
@@ -60,7 +60,7 @@ const NewCheckerPage = () => {
           onChange={form.handleChange}
         />
 
-        <Button color="primary" type="submit">
+        <Button color="primary" isLoading={loading} type="submit">
           Guardar
         </Button>
       </form>

@@ -65,7 +65,7 @@ async function createCheckers(req: Request, payload: SessionPayload) {
     },
   });
 
-  const { info, previewUrl } = await sendMail({
+  await sendMail({
     to: email,
     subject: "RAVR - Bienvenido a RAVR!",
     template: "welcome-checker",
