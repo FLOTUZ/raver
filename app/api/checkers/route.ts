@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import { NextResponse } from "next/server";
 
 import { SessionPayload } from "@/interfaces";
-import { protectedRoute } from "@/lib";
+import { protectedRoute, sendMail } from "@/lib";
 import { prisma } from "@/prisma";
 
 async function getCheckers(_: Request, payload: SessionPayload) {
@@ -49,6 +49,29 @@ async function createCheckers(req: Request, payload: SessionPayload) {
   const checker = await prisma.checker.create({
     data: {
       user_id: user.id,
+    },
+  });
+
+  const randomToken = Array(12)
+    .fill(0)
+    .map(() => String.fromCharCode(97 + Math.floor(Math.random() * 26)))
+    .join("");
+
+  const ott_token = await prisma.oneTimeToken.create({
+    data: {
+      token: randomToken,
+      url: `${process.env.FRONTEND_URL}/reset-password?ott=${randomToken}`,
+      expires_at: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
+    },
+  });
+
+  const { info, previewUrl } = await sendMail({
+    to: email,
+    subject: "RAVR - Bienvenido a RAVR!",
+    template: "welcome-checker",
+    context: {
+      name,
+      ott_token_url: ott_token.url,
     },
   });
 

@@ -88,3 +88,13 @@ model Ticket {
   created_at      DateTime     @default(now())
   updated_at      DateTime     @updatedAt
 }
+
+model OneTimeToken {
+  id         String   @id @default(cuid())
+  token      String
+  url        String
+  expired    Boolean  @default(false)
+  expires_at DateTime
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
