@@ -52,7 +52,7 @@ export async function sendMail({
       },
       viewPath: join(process.cwd(), "lib/mail/templates"),
       extName: ".hbs",
-    }),
+    })
   );
 
   const mailOptions: ExtendedMailOptions = {
@@ -70,6 +70,9 @@ export async function sendMail({
     process.env.NODE_ENV !== "production"
       ? nodemailer.getTestMessageUrl(info)
       : null;
+
+  console.log("[Mailer] Email sent: %s", info.messageId);
+  console.log("[Mailer] Preview URL: %s", previewUrl);
 
   return { info, previewUrl };
 }
