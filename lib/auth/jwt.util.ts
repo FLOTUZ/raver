@@ -5,7 +5,7 @@ import { SessionPayload } from "@/interfaces";
 const SECRET: string = process.env.JWT_SECRET || "supersecret";
 
 export function signJwt({ payload }: { payload: SessionPayload }): string {
-  const options: SignOptions = { expiresIn: "1h" };
+  const options: SignOptions = { expiresIn: "24h" };
 
   return jwt.sign(payload, SECRET, options);
 }
