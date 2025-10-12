@@ -15,7 +15,7 @@ export function withAuth(handler: Handler) {
     const token = authHeader.split(" ")[1];
     const payload = verifyJwt(token);
 
-    if (!payload) {
+    if (payload === "INVALID_TOKEN") {
       return NextResponse.json({ error: "Invalid token" }, { status: 401 });
     }
 

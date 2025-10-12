@@ -14,6 +14,6 @@ export function verifyJwt(token: string) {
   try {
     return jwt.verify(token, SECRET);
   } catch {
-    return "Invalid token";
+    return "INVALID_TOKEN";
   }
 }

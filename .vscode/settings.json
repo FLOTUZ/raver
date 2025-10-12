@@ -5,7 +5,8 @@
   "editor.codeActionsOnSave": {
     "source.sortImports": "always",
     "source.organizeImports": "always",
-    "source.removeUnusedImports": "always"
+    "source.removeUnusedImports": "always",
+    "source.fixAll.eslint": "always"
   },
   "[prisma]": {
     "editor.defaultFormatter": "Prisma.prisma"
