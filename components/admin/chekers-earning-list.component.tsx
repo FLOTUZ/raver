@@ -5,15 +5,20 @@ import { FaMoneyBillWave, FaUserCircle } from "react-icons/fa";
 import { IoAddOutline } from "react-icons/io5";
 
 import { Checker } from "@/interfaces";
+import { useAdminAuth } from "@/providers";
 
 export const CheckersEarningsList = ({ checkers }: { checkers: Checker[] }) => {
+  const { admin } = useAdminAuth();
+
   return (
     <div className="flex flex-col gap-4 m-4">
-      <Link className="fit-content self-end" href="/checker/new">
-        <Button color="primary" variant="solid">
-          Nuevo checkeador <IoAddOutline size={30} />
-        </Button>
-      </Link>
+      {admin?.role === "ADMIN" && (
+        <Link className="fit-content self-end" href="/checker/new">
+          <Button color="primary" variant="solid">
+            Nuevo checkeador <IoAddOutline size={30} />
+          </Button>
+        </Link>
+      )}
 
       <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-200">
         <div className="flex justify-between items-center mb-4 text-gray-800">

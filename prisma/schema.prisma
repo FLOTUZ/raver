@@ -91,9 +91,8 @@ model Ticket {
 
 model OneTimeToken {
   id         String   @id @default(cuid())
-  token      String
+  token      String   @unique
   url        String
-  expired    Boolean  @default(false)
   expires_at DateTime
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt

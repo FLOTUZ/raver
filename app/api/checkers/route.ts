@@ -60,7 +60,7 @@ async function createCheckers(req: Request, payload: SessionPayload) {
   const ott_token = await prisma.oneTimeToken.create({
     data: {
       token: randomToken,
-      url: `${process.env.FRONTEND_URL}/reset-password?ott=${randomToken}`,
+      url: `${process.env.FRONTEND_URL}/auth/reset-password?ott=${randomToken}&user_id=${user.id}`,
       expires_at: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
     },
   });
