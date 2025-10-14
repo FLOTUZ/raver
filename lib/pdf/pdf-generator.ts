@@ -32,23 +32,13 @@ export async function pdfGenerator({
   const template = handlebars.compile(templateContent);
   const html = template(context);
 
-  // Carga puppeteer adecuado (local o serverless)
-  const puppeteer = process.env.VERCEL
-    ? chromium.puppeteer
-    : (await import("puppeteer")).default;
-
-  const executablePath = process.env.VERCEL
-    ? await chromium.executablePath
-    : (puppeteer as any).executablePath?.();
-
   // 🚀 Lanza navegador
-  const browser = await puppeteer.launch({
+  const browser = await chromium.puppeteer.launch({
     args: chromium.args,
     defaultViewport: chromium.defaultViewport,
-    executablePath,
-    headless: true,
+    executablePath: await chromium.executablePath,
+    headless: chromium.headless,
   });
-
   const page = await browser.newPage();
 
   await page.setContent(html, { waitUntil: "networkidle0" });
