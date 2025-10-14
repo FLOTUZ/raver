@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 import { prisma } from "@/prisma";
 
-async function POST(req: Request, __: any) {
+export async function POST(req: Request, __: any) {
   const { new_password, confirm_password, ott, user_id } = await req.json();
 
   if (!ott) {
