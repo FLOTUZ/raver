@@ -52,6 +52,7 @@ model Event {
   start_time    String
   end_time      String?
   host_id       String
+  price         Decimal?      @default(0) @db.Decimal(10, 2)
   host          Host          @relation(fields: [host_id], references: [id])
   tickets       Ticket[]
   created_at    DateTime      @default(now())

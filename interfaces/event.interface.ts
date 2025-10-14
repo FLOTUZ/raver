@@ -8,6 +8,7 @@ export interface Event {
   init_date: string;
   end_date?: string;
   location: string;
+  price: number;
   start_time: string;
   end_time?: string;
   created_at: string;

@@ -12,6 +12,13 @@ interface ModalComponentProps {
   header: React.ReactNode | React.ReactNode[];
   body: React.ReactNode | React.ReactNode[];
   footer?: React.ReactNode | React.ReactNode[];
+  placement?:
+    | "auto"
+    | "top"
+    | "bottom"
+    | "center"
+    | "top-center"
+    | "bottom-center";
 }
 export const ModalComponent = ({
   isOpen,
@@ -19,9 +26,15 @@ export const ModalComponent = ({
   header,
   body,
   footer,
+  placement,
 }: ModalComponentProps) => {
   return (
-    <Modal isOpen={isOpen} size="5xl" onOpenChange={onOpenChange}>
+    <Modal
+      isOpen={isOpen}
+      placement={placement}
+      size="5xl"
+      onOpenChange={onOpenChange}
+    >
       <ModalContent>
         <>
           <ModalHeader className="flex flex-col gap-1">{header}</ModalHeader>

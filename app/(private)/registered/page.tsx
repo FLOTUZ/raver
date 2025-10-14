@@ -1,7 +1,9 @@
 "use client";
 
 import { Button, Progress, useDisclosure } from "@heroui/react";
+import Link from "next/link";
 import { useState } from "react";
+import { IoIosArrowForward } from "react-icons/io";
 
 import { ModalComponent } from "@/components/common/modal.component";
 import { TableComponent } from "@/components/core";
@@ -93,7 +95,15 @@ const RegisteredPage = () => {
         />
       </div>
       <ModalComponent
-        body={<div>{JSON.stringify(selectedRegister, null, 2)}</div>}
+        body={
+          <Link
+            href={`/registered/${selectedRegister?.id}?event_id=${selectedRegister?.event_id}`}
+          >
+            <Button className="w-full flex justify-between">
+              <div>Cobrar</div> <IoIosArrowForward />
+            </Button>
+          </Link>
+        }
         footer={
           <Button color="danger" variant="light" onPress={onClose}>
             Cerrar
@@ -101,6 +111,7 @@ const RegisteredPage = () => {
         }
         header={<h3>Detalles del asistente</h3>}
         isOpen={isOpen}
+        placement="center"
         onOpenChange={onOpenChange}
       />
     </>
