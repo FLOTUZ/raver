@@ -7,7 +7,7 @@ import chromium from "chrome-aws-lambda";
 
 /**
  * Genera un PDF a partir de un template Handlebars y devuelve un Buffer.
- * Compatible tanto con entornos locales como serverless (Vercel).
+ * Compatible con Vercel (serverless) y desarrollo local.
  */
 export async function pdfGenerator({
   templateName,
@@ -22,23 +22,41 @@ export async function pdfGenerator({
   height?: string | number;
   context: Record<string, any>;
 }): Promise<Buffer> {
+  // 🔹 Compila template Handlebars
   const handlebars = (await import("handlebars")).default;
   const templatePath = join(
     process.cwd(),
     `lib/pdf/templates/${templateName}.hbs`
   );
-
   const templateContent = fs.readFileSync(templatePath, "utf-8");
   const template = handlebars.compile(templateContent);
   const html = template(context);
 
-  // 🚀 Lanza navegador
-  const browser = await chromium.puppeteer.launch({
+  // 🔹 Decide qué Puppeteer usar
+  const isLocal = !process.env.AWS_LAMBDA_FUNCTION_NAME;
+  let puppeteer: any;
+  let executablePath: string | undefined;
+
+  if (isLocal) {
+    // 🚀 Local dev: usa Puppeteer completo
+    const localPuppeteer = await import("puppeteer");
+
+    puppeteer = localPuppeteer.default;
+    executablePath = puppeteer.executablePath();
+  } else {
+    // 🖥️ Producción (Vercel serverless): usa chrome-aws-lambda
+    puppeteer = chromium.puppeteer;
+    executablePath = await chromium.executablePath;
+  }
+
+  // 🔹 Lanza el navegador
+  const browser = await puppeteer.launch({
     args: chromium.args,
     defaultViewport: chromium.defaultViewport,
-    executablePath: await chromium.executablePath,
-    headless: chromium.headless,
+    executablePath,
+    headless: true,
   });
+
   const page = await browser.newPage();
 
   await page.setContent(html, { waitUntil: "networkidle0" });
@@ -47,7 +65,7 @@ export async function pdfGenerator({
     height ||
     (await page.evaluate(() => document.documentElement.scrollHeight));
 
-  const pdfBuffer: Buffer = await page.pdf({
+  const pdfBuffer = await page.pdf({
     format,
     width,
     height: contentHeight,
