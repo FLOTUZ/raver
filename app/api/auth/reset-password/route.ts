@@ -1,11 +1,9 @@
 import bcrypt from "bcrypt";
 import { NextResponse } from "next/server";
 
-import { SessionPayload } from "@/interfaces";
-import { protectedRoute } from "@/lib";
 import { prisma } from "@/prisma";
 
-async function resetPassword(req: Request, _: any, payload: SessionPayload) {
+async function POST(req: Request, __: any) {
   const { new_password, confirm_password, ott, user_id } = await req.json();
 
   if (!ott) {
@@ -57,7 +55,3 @@ async function resetPassword(req: Request, _: any, payload: SessionPayload) {
 
   return NextResponse.json({ message: "Contraseña restablecida" });
 }
-
-export const { POST } = protectedRoute({
-  POST: resetPassword,
-});
