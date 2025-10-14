@@ -30,7 +30,11 @@ export const ShowRegisteredComponent = () => {
     isLazy: true,
   });
 
-  const { error: ticketBuyError, mutate: BUY_TICKET } = useMutation({
+  const {
+    error: ticketBuyError,
+    loading: ticketBuyLoading,
+    mutate: BUY_TICKET,
+  } = useMutation({
     url: `/api/tickets`,
     method: "POST",
     onSuccess: async (_) => {
@@ -55,6 +59,16 @@ export const ShowRegisteredComponent = () => {
 
   if (loading || eventLoading) {
     return <div>Loading...</div>;
+  }
+
+  if (ticketBuyLoading) {
+    return (
+      <div className="flex flex-col gap-4 m-4">
+        <div className="flex items-center gap-4">
+          <h1 className="text-3xl font-bold">Cobrando ticket...</h1>
+        </div>
+      </div>
+    );
   }
 
   return (
