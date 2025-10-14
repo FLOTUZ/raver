@@ -32,24 +32,26 @@ export async function pdfGenerator({
   const template = handlebars.compile(templateContent);
   const html = template(context);
 
-  // 🔹 Decide qué Puppeteer usar
+  // 🔹 Detecta entorno
   const isLocal = !process.env.AWS_LAMBDA_FUNCTION_NAME;
-  let puppeteer: any;
+
+  // 🔹 Puppeteer y ejecutable
+  let puppeteer: any; // uso any para evitar error de executablePath
   let executablePath: string | undefined;
 
   if (isLocal) {
-    // 🚀 Local dev: usa Puppeteer completo
+    // 🚀 Local: Puppeteer completo
     const localPuppeteer = await import("puppeteer");
 
     puppeteer = localPuppeteer.default;
     executablePath = puppeteer.executablePath();
   } else {
-    // 🖥️ Producción (Vercel serverless): usa chrome-aws-lambda
+    // 🖥️ Producción (Vercel serverless): chrome-aws-lambda
     puppeteer = chromium.puppeteer;
     executablePath = await chromium.executablePath;
   }
 
-  // 🔹 Lanza el navegador
+  // 🔹 Lanza navegador
   const browser = await puppeteer.launch({
     args: chromium.args,
     defaultViewport: chromium.defaultViewport,
@@ -65,7 +67,7 @@ export async function pdfGenerator({
     height ||
     (await page.evaluate(() => document.documentElement.scrollHeight));
 
-  const pdfBuffer = await page.pdf({
+  const pdfBuffer: Buffer = await page.pdf({
     format,
     width,
     height: contentHeight,
