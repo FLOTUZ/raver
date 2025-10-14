@@ -32,18 +32,14 @@ export async function pdfGenerator({
   const template = handlebars.compile(templateContent);
   const html = template(context);
 
-  // Detecta si estamos en entorno local o en Vercel
-  const isLocal = !process.env.AWS_LAMBDA_FUNCTION_NAME;
-
   // Carga puppeteer adecuado (local o serverless)
-  const puppeteer = isLocal
-    ? (await import("puppeteer")).default // local con Chrome instalado
-    : chromium.puppeteer; // Vercel (usa chromium headless)
+  const puppeteer = process.env.VERCEL
+    ? chromium.puppeteer
+    : (await import("puppeteer")).default;
 
-  // 🧩 Ejecutable de Chrome (según entorno)
-  const executablePath = isLocal
-    ? (puppeteer as any).executablePath?.() // fuerza compatibilidad tipada
-    : await chromium.executablePath;
+  const executablePath = process.env.VERCEL
+    ? await chromium.executablePath
+    : (puppeteer as any).executablePath?.();
 
   // 🚀 Lanza navegador
   const browser = await puppeteer.launch({
