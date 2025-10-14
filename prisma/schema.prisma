@@ -33,7 +33,7 @@ model User {
 model Checker {
   id              String   @id @default(cuid())
   amount          Decimal  @default(0) @db.Decimal(10, 2)
-  user_id         String
+  user_id         String   @unique
   user            User     @relation(fields: [user_id], references: [id])
   created_at      DateTime @default(now())
   updated_at      DateTime @updatedAt
@@ -52,6 +52,7 @@ model Event {
   start_time    String
   end_time      String?
   host_id       String
+  price         Decimal?      @default(0) @db.Decimal(10, 2)
   host          Host          @relation(fields: [host_id], references: [id])
   tickets       Ticket[]
   created_at    DateTime      @default(now())
@@ -74,6 +75,7 @@ model PreRegister {
 
 model Ticket {
   id              String       @id @default(cuid())
+  reference       String       @unique
   is_dynamic      Boolean      @default(false)
   is_sended       Boolean      @default(false)
   event_id        String
@@ -87,4 +89,13 @@ model Ticket {
   pre_register    PreRegister? @relation(fields: [pre_register_id], references: [id])
   created_at      DateTime     @default(now())
   updated_at      DateTime     @updatedAt
+}
+
+model OneTimeToken {
+  id         String   @id @default(cuid())
+  token      String   @unique
+  url        String
+  expires_at DateTime
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }

@@ -82,9 +82,7 @@ export function useQuery<InputInterface, ResponseInterface>(
   }, [fetchData, isLazy]);
 
   const refetch = (newData?: InputInterface) => {
-    if (didRun.current) {
-      fetchData(newData);
-    }
+    fetchData(newData);
   };
 
   return { data, loading, error, refetch, isFetchingMore };

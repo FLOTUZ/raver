@@ -4,4 +4,5 @@ export interface PaginatedQuery {
   order_by_column?: string;
   order?: "asc" | "desc";
   filters?: string;
+  search?: string;
 }

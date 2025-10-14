@@ -2,10 +2,10 @@ import { NextResponse } from "next/server";
 
 import { verifyJwt } from "./jwt.util";
 
-type Handler = (req: Request, payload: any) => Promise<NextResponse>;
+type Handler = (req: Request, ...args: any[]) => Promise<NextResponse>;
 
 export function withAuth(handler: Handler) {
-  return async function (req: Request) {
+  return async function (req: Request, ...args: any[]) {
     const authHeader = req.headers.get("Authorization");
 
     if (!authHeader) {
@@ -15,11 +15,10 @@ export function withAuth(handler: Handler) {
     const token = authHeader.split(" ")[1];
     const payload = verifyJwt(token);
 
-    if (!payload) {
+    if (payload === "INVALID_TOKEN") {
       return NextResponse.json({ error: "Invalid token" }, { status: 401 });
     }
 
-    // Llama al handler pasando el payload decodificado
-    return handler(req, payload);
+    return handler(req, ...args, payload);
   };
 }

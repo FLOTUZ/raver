@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 import { PreRegister, SessionPayload } from "@/interfaces";
@@ -15,6 +16,24 @@ async function getSelledTickets(req: Request, _: SessionPayload) {
   const filtersParam = searchParams.get("filters");
   const filters = filtersParam ? JSON.parse(filtersParam) : {};
 
+  const search = searchParams.get("search");
+
+  // Objeto 'where' para los filtros de Prisma
+  let where: Prisma.PreRegisterWhereInput = {};
+
+  if (search) {
+    // Si hay un término de búsqueda, aplicamos un filtro OR para buscar
+    // en los campos 'name', 'email' y 'telephone'.
+    // 'mode: "insensitive"' asegura que la búsqueda no distinga mayúsculas/minúsculas.
+    where = {
+      OR: [
+        { name: { contains: search, mode: "insensitive" } },
+        { email: { contains: search, mode: "insensitive" } },
+        { telephone: { contains: search, mode: "insensitive" } },
+      ],
+    };
+  }
+
   const orderBy =
     filters?.order_by_column && filters?.order
       ? { [filters.order_by_column]: filters.order }
@@ -26,6 +45,7 @@ async function getSelledTickets(req: Request, _: SessionPayload) {
     rows_per_page,
     options: {
       orderBy,
+      where,
       include: {
         ticket: true,
       },

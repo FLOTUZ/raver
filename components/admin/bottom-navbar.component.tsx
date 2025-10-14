@@ -1,9 +1,7 @@
 // components/BottomNavBar.tsx
 "use client";
-
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FaQrcode } from "react-icons/fa";
 
 import { useScrollDirection } from "@/hooks/useScrollDirection";
 
@@ -21,7 +19,7 @@ export const BottomNavBarComponent = () => {
         ${scrollingDown ? "transform translate-y-100" : "transform translate-y-0"} 
         ${scrollingDown ? "mb-0" : "mb-16"}`}
     >
-      <div className="flex justify-around h-16 items-center max-w-lg mx-auto px-4">
+      <div className="flex justify-between h-16 items-center max-w-lg mx-auto px-4">
         {/* Enlaces de la izquierda */}
         <div className="flex flex-1 justify-around">
           <Link
@@ -36,15 +34,6 @@ export const BottomNavBarComponent = () => {
             <span>Dashboard</span>
           </Link>
         </div>
-
-        <Link replace href="/scanner">
-          <button className="relative flex flex-col items-center justify-center -mt-16 mx-4 w-20 h-20 bg-blue-600 text-white rounded-full shadow-xl ring-4 ring-white/40 transform transition-transform duration-200 hover:scale-110 active:scale-105">
-            <span className="text-xl">
-              <FaQrcode size={32} />
-            </span>
-            <span className="text-xs mt-1">Escanear</span>
-          </button>
-        </Link>
 
         {/* Enlaces de la derecha */}
         <div className="flex flex-1 justify-around">
