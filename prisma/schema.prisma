@@ -75,6 +75,7 @@ model PreRegister {
 
 model Ticket {
   id              String       @id @default(cuid())
+  reference       String       @unique
   is_dynamic      Boolean      @default(false)
   is_sended       Boolean      @default(false)
   event_id        String

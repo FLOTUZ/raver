@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import QRCode from "qrcode";
+import { v4 as uuidv4 } from "uuid";
 
 import { SessionPayload } from "@/interfaces";
 import { pdfGenerator, protectedRoute, sendMail } from "@/lib";
@@ -51,11 +52,24 @@ const createTicket = async function resetPassword(
     );
   }
 
+  let reference = "";
+
+  // avoid duplicate references and colitions
+  while (true) {
+    reference = uuidv4().replace(/-/g, "").substring(0, 8).toUpperCase();
+    const ticket = await prisma.ticket.findUnique({
+      where: { reference },
+    });
+
+    if (ticket == null) break;
+  }
+
   const ticket = await prisma.ticket.create({
     data: {
       is_paid: true,
       is_sended: true,
       price: event.price!,
+      reference,
       event: {
         connect: {
           id: event.id,
@@ -98,14 +112,14 @@ const createTicket = async function resetPassword(
     },
   });
 
-  const qrImageDataUrl = await QRCode.toDataURL(ticket.id);
+  const qrImageDataUrl = await QRCode.toDataURL(ticket.reference);
 
   const pdfBuffer = await pdfGenerator({
     templateName: "ticket",
     width: "120mm",
     context: {
       guest: preregister.name,
-      ticket_id: ticket.id,
+      reference: ticket.reference,
       event_banner: event.banner || event.image,
       event_name: event.name,
       event_date: event.start_time,
@@ -121,7 +135,7 @@ const createTicket = async function resetPassword(
     template: "ticket-confirmation",
     context: {
       guest: preregister.name,
-      ticket_id: ticket.id,
+      reference: ticket.reference,
       event_banner: event.banner || event.image,
       event_name: event.name,
       event_date: event.start_time,
