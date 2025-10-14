@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
+import QRCode from "qrcode";
 
 import { SessionPayload } from "@/interfaces";
-import { protectedRoute } from "@/lib";
+import { pdfGenerator, protectedRoute, sendMail } from "@/lib";
 import { prisma } from "@/prisma";
 
 const createTicket = async function resetPassword(
@@ -13,6 +14,7 @@ const createTicket = async function resetPassword(
 
   const event = await prisma.event.findUnique({
     where: { id: event_id },
+    include: { host: true },
   });
 
   const checker = await prisma.checker.findUnique({
@@ -94,6 +96,44 @@ const createTicket = async function resetPassword(
         increment: event.price!,
       },
     },
+  });
+
+  const qrImageDataUrl = await QRCode.toDataURL(ticket.id);
+
+  const pdfBuffer = await pdfGenerator({
+    templateName: "ticket",
+    width: "120mm",
+    context: {
+      guest: preregister.name,
+      ticket_id: ticket.id,
+      event_banner: event.banner || event.image,
+      event_name: event.name,
+      event_date: event.start_time,
+      event_location: event.location,
+      host: event.host,
+      qrImageDataUrl,
+    },
+  });
+
+  await sendMail({
+    to: preregister.email,
+    subject: `Tus accesos a ${event.name}`,
+    template: "ticket-confirmation",
+    context: {
+      guest: preregister.name,
+      ticket_id: ticket.id,
+      event_banner: event.banner || event.image,
+      event_name: event.name,
+      event_date: event.start_time,
+      event_location: event.location,
+      host: event.host,
+    },
+    attachments: [
+      {
+        filename: `tickets ${event.name}.pdf`,
+        content: pdfBuffer,
+      },
+    ],
   });
 
   return NextResponse.json(ticket);

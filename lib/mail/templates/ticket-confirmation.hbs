@@ -1,0 +1,85 @@
+<div
+  style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #e0e0e0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);"
+>
+  <img
+    src="{{event_banner}}"
+    alt="Banner del evento: {{event_name}}"
+    style="width: 100%; max-height: 250px; object-fit: cover; display: block;"
+  />
+
+  <div style="padding: 25px;">
+    <h1 style="color: #1a1a1a; font-size: 24px; margin-top: 0;">
+      ¡Compra Exitosa,
+      {{guest}}! 🎉
+    </h1>
+    <p style="font-size: 16px; color: #333; line-height: 1.6;">
+      ¡Felicidades! Tus tickets para
+      <strong style="color: #007bff;">{{event_name}}</strong>
+      han sido confirmados. Prepara tu agenda y disfruta de este gran evento.
+    </p>
+
+    <hr style="border: 0; border-top: 1px solid #e0e0e0; margin: 25px 0;" />
+
+    <h2 style="color: #4a4a4a; font-size: 20px; margin-bottom: 15px;">
+      Detalles de tu Ticket
+    </h2>
+    <div
+      style="background-color: #f8f8f8; padding: 15px; border-radius: 8px; border-left: 5px solid #007bff;"
+    >
+      <p style="font-size: 16px; color: #333; margin: 0 0 10px 0;">
+        <strong style="display: inline-block; width: 100px;">Evento:</strong>
+        {{event_name}}
+      </p>
+      <p style="font-size: 16px; color: #333; margin: 0 0 10px 0;">
+        <strong style="display: inline-block; width: 100px;">Ticket ID:</strong>
+        <span style="color: #d9534f; font-weight: bold;">{{ticket_id}}</span>
+      </p>
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid #e0e0e0; margin: 25px 0;" />
+
+    <h2 style="color: #4a4a4a; font-size: 20px; margin-bottom: 15px;">
+      Información del Evento
+    </h2>
+    <ul style="list-style-type: none; padding: 0;">
+      <li
+        style="font-size: 16px; color: #555; margin-bottom: 12px; display: flex; align-items: center;"
+      >
+        <span
+          style="color: #007bff; margin-right: 10px; font-weight: bold; font-size: 18px;"
+        >🗓️</span>
+        <strong>Fecha y Hora:</strong>
+        {{event_date}}
+      </li>
+      <li
+        style="font-size: 16px; color: #555; margin-bottom: 12px; display: flex; align-items: center;"
+      >
+        <span
+          style="color: #007bff; margin-right: 10px; font-weight: bold; font-size: 18px;"
+        >📍</span>
+        <strong>Lugar:</strong>
+        {{event_location}}
+      </li>
+    </ul>
+
+    <div style="text-align: center; margin: 30px 0;">
+      <a
+        href="#"
+        style="display: inline-block; padding: 12px 25px; background-color: #28a745; color: #ffffff; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 16px; transition: background-color 0.3s ease;"
+      >DESCARGAR MI TICKET</a>
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid #e0e0e0; margin: 25px 0;" />
+
+    <p style="font-size: 14px; color: #777; text-align: center;">
+      Para el acceso, solo presenta tu Ticket ID o el código QR. ¡Esperamos
+      verte allí!
+    </p>
+    <p
+      style="font-size: 14px; color: #777; text-align: center; margin-top: 15px;"
+    >
+      Si tienes alguna duda, puedes contactar al organizador:
+      <strong style="color: #007bff;">{{host}}</strong>.
+    </p>
+  </div>
+</div>

@@ -1,0 +1,169 @@
+<style>
+  /* Configuración de la página PDF */
+  @page {
+    /* Ancho fijo de 120mm. La altura es 'auto' para ajustarse al contenido. */
+    size: 120mm auto;
+    margin: 0;
+  }
+
+  /* Estilos base */
+  * {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    box-sizing: border-box;
+  }
+
+  /* Contenedor principal del ticket */
+  .ticket-container {
+    width: 120mm;
+    padding: 10px;
+    border: 1px solid #333; /* Un borde sutil para enmarcarlo en la impresión */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+  }
+
+  /* Banner/Logo (recortado) */
+  .event-banner {
+    width: 100%;
+    height: 40px; /* Altura pequeña para el formato de ticket */
+    object-fit: cover;
+    display: block;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+
+  /* Encabezados y texto */
+  h1 {
+    font-size: 16px;
+    color: #007bff;
+    text-align: center;
+    margin: 5px 0 10px 0;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    font-size: 14px;
+    color: #333;
+    margin: 5px 0;
+  }
+
+  p {
+    font-size: 10px;
+    color: #555;
+    margin: 3px 0;
+  }
+
+  /* Separador */
+  .divider {
+    border: 0;
+    border-top: 1px dashed #cccccc;
+    margin: 10px 0;
+  }
+
+  /* Bloque de datos del evento */
+  .info-block {
+    margin-bottom: 10px;
+  }
+
+  .info-block strong {
+    display: inline-block;
+    min-width: 40px;
+    color: #1a1a1a;
+  }
+
+  /* Sección de Acceso (QR) */
+  .access-section {
+    text-align: center;
+    margin-top: 15px;
+    padding: 10px;
+    border-top: 1px solid #eee;
+  }
+
+  .qr-code {
+    width: 80px; /* Tamaño del QR para 120mm */
+    height: 80px;
+    margin: 5px auto;
+    display: block;
+  }
+
+  .ticket-id {
+    font-size: 12px;
+    font-weight: bold;
+    color: #d9534f;
+    margin-top: 5px;
+    word-break: break-all; /* Útil por si el ID es muy largo */
+  }
+
+  .guest-name {
+    font-size: 14px;
+    font-weight: bold;
+    color: #000;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .footer-text {
+    font-size: 8px;
+    color: #888;
+    text-align: center;
+    margin-top: 10px;
+  }
+</style>
+
+<html>
+  <body>
+    <div class="ticket-container">
+
+      <img
+        src="{{event_banner}}"
+        alt="Banner del evento"
+        class="event-banner"
+      />
+
+      <h1>TICKET DE ACCESO</h1>
+
+      <hr class="divider" />
+
+      <p class="guest-name">{{guest}}</p>
+
+      <hr class="divider" />
+
+      <div class="info-block">
+        <h2>{{event_name}}</h2>
+        <p>
+          <strong>Fecha:</strong>
+          {{event_date}}
+        </p>
+        <p>
+          <strong>Lugar:</strong>
+          {{event_location}}
+        </p>
+      </div>
+
+      <div class="access-section">
+        <p style="font-size: 10px; font-weight: bold; color: #333;">PRESENTE
+          ESTE CÓDIGO EN LA ENTRADA</p>
+
+        <img
+          src="{{qrImageDataUrl}}"
+          alt="Código QR del ticket"
+          class="qr-code"
+        />
+
+        <p style="font-size: 8px; color: #555; margin-top: 8px;">TICKET ID:</p>
+        <p class="ticket-id">{{ticket_id}}</p>
+      </div>
+
+      <div class="footer-text">
+        <hr style="border: 0; border-top: 1px dashed #cccccc; margin: 5px 0;" />
+        <p>
+          Ticket personal e intransferible. Válido solo para 1 acceso.
+        </p>
+        <p>
+          Contacto:
+          {{host}}
+        </p>
+      </div>
+
+    </div>
+  </body>
+</html>
