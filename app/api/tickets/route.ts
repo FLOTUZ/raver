@@ -110,7 +110,7 @@ const createTicket = async function resetPassword(
       event_name: event.name,
       event_date: event.start_time,
       event_location: event.location,
-      host: event.host,
+      host: event.host.name,
       qrImageDataUrl,
     },
   });
@@ -126,7 +126,7 @@ const createTicket = async function resetPassword(
       event_name: event.name,
       event_date: event.start_time,
       event_location: event.location,
-      host: event.host,
+      host: event.host.name,
     },
     attachments: [
       {
