@@ -10,7 +10,7 @@ async function getUsers(req: Request, payload: SessionPayload) {
   return NextResponse.json({ users, me: payload });
 }
 
-async function createUser(req: Request, _: SessionPayload) {
+async function createUser(req: Request, __: any, _: SessionPayload) {
   const body = await req.json();
   const user = await prisma.user.create({ data: body });
 

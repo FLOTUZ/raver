@@ -17,7 +17,7 @@ async function getCheckers(_: Request, payload: SessionPayload) {
   return NextResponse.json({ checkers });
 }
 
-async function createCheckers(req: Request, payload: SessionPayload) {
+async function createCheckers(req: Request, _: any, payload: SessionPayload) {
   const { name, email } = await req.json();
 
   const userAlreadyExists = await prisma.user.findUnique({

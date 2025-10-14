@@ -5,7 +5,7 @@ import { SessionPayload } from "@/interfaces";
 import { protectedRoute } from "@/lib";
 import { prisma } from "@/prisma";
 
-async function resetPassword(req: Request, payload: SessionPayload) {
+async function resetPassword(req: Request, _: any, payload: SessionPayload) {
   const { new_password, confirm_password, ott, user_id } = await req.json();
 
   if (!ott) {
