@@ -17,6 +17,7 @@ export const events: Event[] = [
     end_time: "12:00",
     created_at: "2023-01-01T00:00:00.000Z",
     updated_at: "2023-01-01T00:00:00.000Z",
+    price: 0,
   },
   {
     id: "2",
@@ -33,5 +34,6 @@ export const events: Event[] = [
     end_time: "12:00",
     created_at: "2023-01-01T00:00:00.000Z",
     updated_at: "2023-01-01T00:00:00.000Z",
+    price: 0,
   },
 ];
