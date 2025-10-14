@@ -10,6 +10,15 @@ import { TableComponent } from "@/components/core";
 import { useQuery } from "@/hooks/useQuery";
 import { PaginatedQuery, PaginatedResponse, PreRegister } from "@/interfaces";
 
+type FormattedPreRegister = Omit<
+  PreRegister,
+  "ticket" | "created_at" | "updated_at"
+> & {
+  ticket: "PAGADO" | "PENDIENTE";
+  created_at: string;
+  updated_at: string;
+};
+
 const RegisteredPage = () => {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure({
     onChange(isOpen) {
@@ -53,22 +62,25 @@ const RegisteredPage = () => {
     <>
       <div className="flex flex-col gap-4 mb-48 p-4">
         <h1 className="text-2xl font-bold">Asistentes registrados</h1>
-        <TableComponent<PreRegister>
+        <TableComponent<PreRegister, FormattedPreRegister>
           columns={[
-            { key: "id", label: "ID" },
             { key: "name", label: "Nombre" },
             { key: "email", label: "Correo" },
             { key: "telephone", label: "Telefono" },
             { key: "ticket", label: "Ticket" },
             { key: "created_at", label: "Creado" },
-            { key: "updated_at", label: "Actualizado" },
+            { key: "id", label: "ID" },
           ]}
           currentPage={registered.current_page}
           data={registered.rows.map((preRegister) => ({
+            // 1. Datos formateados (para pintar)
             ...preRegister,
-            ticket: preRegister.ticket !== null ? "Si" : "No",
+            ticket: preRegister.ticket !== null ? "PAGADO" : "PENDIENTE",
             created_at: new Date(preRegister.created_at).toLocaleString(),
             updated_at: new Date(preRegister.updated_at).toLocaleString(),
+
+            // 2. Registro Original (para el click handler)
+            __original: preRegister,
           }))}
           indexKey={"id"}
           loadingState={isFetchingMore}
@@ -79,8 +91,8 @@ const RegisteredPage = () => {
             refetch({ page, rows_per_page: rowsPerPage });
           }}
           onRowClick={(row) => {
-            onOpen();
             setSelectedRegister(row);
+            onOpen();
           }}
           onRowsPerPageChange={(event) => {
             refetch({
@@ -96,20 +108,33 @@ const RegisteredPage = () => {
       </div>
       <ModalComponent
         body={
-          <Link
-            href={`/registered/${selectedRegister?.id}?event_id=${selectedRegister?.event_id}`}
-          >
-            <Button className="w-full flex justify-between">
-              <div>Cobrar</div> <IoIosArrowForward />
-            </Button>
-          </Link>
+          <div className="flex flex-col gap-2">
+            <Link
+              href={`/registered/${selectedRegister?.id}?event_id=${selectedRegister?.event_id}`}
+            >
+              <Button
+                className="w-full flex justify-between"
+                color={selectedRegister?.ticket != null ? "success" : "primary"}
+                disabled={selectedRegister?.ticket != null}
+              >
+                <div
+                  className={`text-lg ${selectedRegister?.ticket != null ? "text-white" : ""}`}
+                >
+                  {selectedRegister?.ticket != null
+                    ? "Ticket ya fué cobrado"
+                    : "Cobrar ticket"}
+                </div>
+                <IoIosArrowForward />
+              </Button>
+            </Link>
+          </div>
         }
         footer={
           <Button color="danger" variant="light" onPress={onClose}>
             Cerrar
           </Button>
         }
-        header={<h3>Detalles del asistente</h3>}
+        header={<h3>{selectedRegister?.name}</h3>}
         isOpen={isOpen}
         placement="center"
         onOpenChange={onOpenChange}

@@ -33,7 +33,7 @@ model User {
 model Checker {
   id              String   @id @default(cuid())
   amount          Decimal  @default(0) @db.Decimal(10, 2)
-  user_id         String
+  user_id         String   @unique
   user            User     @relation(fields: [user_id], references: [id])
   created_at      DateTime @default(now())
   updated_at      DateTime @updatedAt
