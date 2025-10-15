@@ -64,16 +64,23 @@ export async function pdfGenerator({
 
   await page.setContent(html, { waitUntil: "networkidle0" });
 
-  // Calcular altura del contenido si no se proporciona
-  let contentHeight: string | number = height || "auto";
-
-  const pdf = await page.pdf({
+  // Configuración del PDF
+  const pdfOptions: any = {
     format,
-    width,
-    height: contentHeight,
     printBackground: true,
     preferCSSPageSize: true,
-  });
+  };
+
+  // Solo agregar width y height si están definidos
+  if (width) {
+    pdfOptions.width = width;
+  }
+
+  if (height) {
+    pdfOptions.height = height;
+  }
+
+  const pdf = await page.pdf(pdfOptions);
 
   await browser.close();
 
