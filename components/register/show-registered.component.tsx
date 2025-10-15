@@ -40,7 +40,7 @@ export const ShowRegisteredComponent = () => {
     onSuccess: async (_) => {
       onOpenChange();
       await new Promise((resolve) => setTimeout(resolve, 2000));
-      router.back();
+      router.replace("/registered");
     },
     onError: (error: any) => {
       addToast({
