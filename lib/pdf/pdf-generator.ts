@@ -43,9 +43,12 @@ export async function pdfGenerator({
 
     browser = await puppeteerCore.default.launch({
       args: chromium.default.args,
-      defaultViewport: chromium.default.defaultViewport,
+      defaultViewport: {
+        width: 1920,
+        height: 1080,
+      },
       executablePath: await chromium.default.executablePath(),
-      headless: chromium.default.headless,
+      headless: true,
     });
   } else {
     // 🚀 Local: Puppeteer completo
@@ -61,11 +64,10 @@ export async function pdfGenerator({
 
   await page.setContent(html, { waitUntil: "networkidle0" });
 
-  const contentHeight =
-    height ||
-    (await page.evaluate(() => document.documentElement.scrollHeight));
+  // Calcular altura del contenido si no se proporciona
+  let contentHeight: string | number = height || "auto";
 
-  const pdfBuffer: Buffer = await page.pdf({
+  const pdf = await page.pdf({
     format,
     width,
     height: contentHeight,
@@ -74,6 +76,9 @@ export async function pdfGenerator({
   });
 
   await browser.close();
+
+  // Convertir Uint8Array a Buffer si es necesario
+  const pdfBuffer = Buffer.from(pdf);
 
   return pdfBuffer;
 }
