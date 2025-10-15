@@ -41,7 +41,6 @@ export const ShowRegisteredComponent = () => {
       onOpenChange();
       await new Promise((resolve) => setTimeout(resolve, 2000));
       router.back();
-      router.refresh();
     },
     onError: (error: any) => {
       addToast({

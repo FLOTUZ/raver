@@ -90,6 +90,12 @@ const RegisteredPage = () => {
           onPageChange={(page) => {
             refetch({ page, rows_per_page: rowsPerPage });
           }}
+          onRefresh={() => {
+            refetch({
+              page: registered.current_page,
+              rows_per_page: rowsPerPage,
+            });
+          }}
           onRowClick={(row) => {
             setSelectedRegister(row);
             onOpen();

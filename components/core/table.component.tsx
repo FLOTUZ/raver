@@ -1,4 +1,5 @@
 import {
+  Button,
   Input,
   Pagination,
   Spinner,
@@ -11,6 +12,7 @@ import {
   getKeyValue,
 } from "@heroui/react";
 import React from "react";
+import { RiRefreshLine } from "react-icons/ri";
 
 // Definimos el tipo de datos fusionado: es el tipo formateado (F)
 // más una propiedad '__original' que contiene el tipo original (T).
@@ -29,6 +31,7 @@ interface TableComponentProps<T, F> {
   // onRowClick sigue esperando el tipo original T
   onRowClick?: (row: T) => void;
   columns: { key: string; label: string }[];
+  onRefresh?: () => void;
   loadingState?: boolean;
   totalPages: number;
   totalRows: number;
@@ -51,6 +54,7 @@ export const TableComponent = <T, F>({
   rowsPerPage = 10,
   currentPage,
   onPageChange,
+  onRefresh,
   onRowsPerPageChange,
 }: TableComponentProps<T, F>) => {
   // Convertimos el tipo de 'data' para usarlo en la tabla.
@@ -96,13 +100,26 @@ export const TableComponent = <T, F>({
           wrapper: "min-h-[222px]",
         }}
         topContent={
-          onSearch && (
-            <Input
-              className="w-full"
-              placeholder="Buscar..."
-              onValueChange={(value) => onSearch(value)}
-            />
-          )
+          <div className="flex justify-between items-center gap-2 mb-2">
+            {onRefresh && (
+              <div className="flex justify-start">
+                <Button
+                  isIconOnly
+                  aria-label="Refrescar tabla"
+                  onPress={onRefresh}
+                >
+                  <RiRefreshLine size={20} />
+                </Button>
+              </div>
+            )}
+            {onSearch && (
+              <Input
+                className="w-full"
+                placeholder="Buscar..."
+                onValueChange={(value) => onSearch(value)}
+              />
+            )}
+          </div>
         }
       >
         <TableHeader columns={columns}>
