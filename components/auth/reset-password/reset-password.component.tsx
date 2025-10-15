@@ -49,6 +49,19 @@ export const ResetPasswordComponent = () => {
       new_password: "",
       confirm_password: "",
     },
+    validate(values) {
+      const errors: any = {};
+
+      if (!values.confirm_password) {
+        errors.confirm_password = "Requerido";
+      } else if (values.confirm_password !== values.new_password) {
+        errors.confirm_password = "Las contraseñas no coinciden";
+      }
+
+      return errors;
+    },
+    validateOnChange: true,
+    enableReinitialize: true,
     onSubmit: (values) => {
       if (!ott || !user_id) {
         addToast({
@@ -73,17 +86,25 @@ export const ResetPasswordComponent = () => {
     <div className="flex flex-col gap-4">
       <form className="flex flex-col gap-4" onSubmit={form.handleSubmit}>
         <Input
-          label="Nueva contraseña"
+          errorMessage={form.errors.new_password}
+          isInvalid={form.touched.new_password && !!form.errors.new_password}
+          label="Nueva contraseña"
           name="new_password"
           type="password"
           value={form.values.new_password}
+          onBlur={form.handleBlur}
           onChange={form.handleChange}
         />
         <Input
-          label="Confirmar contraseña"
+          errorMessage={form.errors.confirm_password}
+          isInvalid={
+            form.touched.confirm_password && !!form.errors.confirm_password
+          }
+          label="Confirmar contraseña"
           name="confirm_password"
           type="password"
           value={form.values.confirm_password}
+          onBlur={form.handleBlur}
           onChange={form.handleChange}
         />
 
