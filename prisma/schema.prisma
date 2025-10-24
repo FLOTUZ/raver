@@ -64,7 +64,7 @@ model PreRegister {
   id         String   @id @default(cuid())
   name       String
   email      String
-  telephone  String
+  telephone  String?
   is_sended  Boolean  @default(false)
   event_id   String
   event      Event    @relation(fields: [event_id], references: [id])

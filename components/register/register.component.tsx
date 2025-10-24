@@ -38,7 +38,9 @@ export const RegisterComponent = ({ eventId }: { eventId: string }) => {
       const payload = {
         name: values.name,
         email: values.email,
-        telephone: values.country_code.slice(1) + "1" + values.whatsApp,
+        telephone:
+          values.whatsApp &&
+          values.country_code.slice(1) + "1" + values.whatsApp,
       };
 
       try {

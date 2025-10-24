@@ -34,7 +34,7 @@ export async function POST(
         user: {
           name,
           email,
-          telephone,
+          telephone: telephone || "No proporcionado",
         },
         ...event,
         host: event.host.name,
