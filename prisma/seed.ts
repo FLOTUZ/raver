@@ -64,9 +64,6 @@ async function main() {
 ---
 
 ⚠ **Disfraz obligatorio**
-
-👉 Haz tu registro para confirmar tu asistencia y ayudarnos a organizar una noche épica
-
 ---
 
 🕷 **¡No faltes, será una fiesta de miedo!**

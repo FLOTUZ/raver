@@ -38,11 +38,20 @@ export const EditEventView = ({ eventId }: { eventId: string }) => {
         minute: "2-digit",
       });
 
-      await axios.put(`/api/events/${eventId}`, {
-        ...values,
-        start_time,
-        end_time,
-      });
+      await axios.put(
+        `/api/events/${eventId}`,
+        {
+          ...values,
+          start_time,
+          end_time,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
     },
   });
 

@@ -5,7 +5,7 @@ import { withAuth } from "./with-auth.util";
 type Handlers = {
   GET?: (req: Request, payload: any) => Promise<NextResponse>;
   POST?: (req: Request, context: any, payload: any) => Promise<NextResponse>;
-  PUT?: (req: Request, payload: any) => Promise<NextResponse>;
+  PUT?: (req: Request, context: any, payload: any) => Promise<NextResponse>;
   PATCH?: (req: Request, payload: any) => Promise<NextResponse>;
   DELETE?: (req: Request, payload: any) => Promise<NextResponse>;
 };
