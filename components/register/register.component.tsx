@@ -154,7 +154,6 @@ export const RegisterComponent = ({ eventId }: { eventId: string }) => {
 
               <div className="flex gap-2 flex-row mt-8">
                 <Input
-                  isRequired
                   className="w-25"
                   errorMessage={({ validationDetails }) => {
                     if (validationDetails.valueMissing) {
@@ -180,7 +179,6 @@ export const RegisterComponent = ({ eventId }: { eventId: string }) => {
                 />
 
                 <Input
-                  isRequired
                   errorMessage={({ validationDetails }) => {
                     if (validationDetails.valueMissing) {
                       return "Por favor ingresa tu número de WhatsApp";
